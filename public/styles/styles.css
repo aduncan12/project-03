@@ -1,0 +1,90 @@
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 2% auto;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(100, 100, 100, 0.25)), url("../images/abandoned.jpg");
+    background-size: cover;
+    /* background-color: #CCCCCC; */
+    width: 95vw;
+    height: 95vh;
+    font-size: 1.2rem;
+}
+
+nav {
+    padding: 2%;
+    background-color: #DDDDDD;
+    /* opacity: .2; */
+    display: flex;
+    justify-content: flex-end;
+    /* box-shadow: 1px 1px rgba(0,0,0,.5); */
+    border-radius: 5px;
+    width: 85vw;
+    margin: auto;
+    
+}
+
+#signUp, #logIn {
+    margin: 0 2%;
+    border: none;
+    background-color: #DDDDDD;
+}
+
+#signUp:hover, #logIn:hover {
+    cursor: pointer;
+}
+
+main {
+    justify-content: center;
+    height: 100vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+#search {
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+h1 {
+    color: #DDDDDD;
+    margin: 15% 0;
+}
+
+#bandSearch {
+    /* border: 1px solid; */
+    padding: 0 2%;
+    border-radius: 10px;
+}
+
+.fas {
+    color: #DDDDDD;
+    margin: auto 7%;
+}
+
+.fas:hover {
+    cursor: pointer;
+}
+
+footer {
+    padding: 2%;
+    background-color: #DDDDDD;
+    /* opacity: .2; */
+    display: flex;
+    justify-content: center;
+    box-shadow: 1px 1px rgba(0,0,0,.5);
+    border-radius: 5px;
+    width: 75vw;
+    margin: auto;
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #000000;
+}

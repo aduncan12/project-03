@@ -88,3 +88,7 @@ a:hover {
     text-decoration: underline;
     color: #000000;
 }
+
+#testDiv {
+    color: #DDDDDD;
+}

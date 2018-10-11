@@ -17,6 +17,7 @@ const user = {
 };
 
 const artist = {
+    id: 2,
     artist: 'Plainclothesman',
     image: './public/images/farallones.jpg',
     popularity: 4,

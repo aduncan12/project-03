@@ -1,8 +1,19 @@
-let accessToken = 'BQDGzOPTEKX2lDZiKq6Gfdyh-r_co7IPtE5oKSRPPVVjTNbJ-wF8_Lz1yGVk0kVYnEjoU4_nRNwPOjrrcTU-r7nhd8wPHZGeXT8fldcx1eX2s2aCMCSmGxAvZOJpll9J0zFEYQnX2scp7z1ZA9dmC2GPM1wCb6c52E-8IQ';
+let accessToken = 'BQBMYyz0WnQ8X3j88fWrXJivyVryxDX__VMSUM7JwXXeQbuJpSEMKPSdwbSRBU-_IlhMVoHHZBBwpgLfjC68rjMtNcXJOC8cvT2ka6O3XITjvSMuX3m7JyBzMNhgA1jXjqkZewAHb8JOgie2H5bUMYf-fsJkcJ3Oo7de4A&refresh_token=AQCPfhA1QnoVz9rqxomGZ3rjDfue3To3gxPD-rdb5LXp39kengO2wFYl_aiH52M95F2lwy00cdcar0SIXN9l3D_AlFfQ5S6jPNgNXrwUgTJ2NMEWuTvtTSrjLTsaeacA--ybXg';
 
 let artistSuccess = (res) => {
     let artistId = res.artists.items[0].id;
-    console.log(artistId);
+    $('#testDiv').css('display', 'inline')
+    $('#search').css('display', 'block')
+    // let matches = res.artists.items
+    //     console.log(matches)
+    //     let findMatch = () => {
+    //         let match = 
+    //         console.log(matches.map(findMatch));
+    //     for (i=0; i < res.artists.items.length; i++) {
+    //         let matches = res.artists.items[i].name
+    //         console.log(matches)
+    //     }
+    
     //ajax request for related artists
     $.ajax({
         method: 'GET',
@@ -11,18 +22,13 @@ let artistSuccess = (res) => {
             'Authorization': 'Bearer ' + accessToken
         }, 
         success: recommend = (res) => {
-            console.log(res)
-            let i;
+            // console.log(res)
             for (i=0; i < res.artists.length; i++) {
                 let newArtists = res.artists[i].name
                 let popularity = res.artists[i].popularity
                 let url = res.artists[i].external_urls.spotify
                 let artistList = 
-                `<li>
-                <p><a href="${url}">${newArtists}</a> ${popularity} </p>
-                
-                </li>`
-
+                `<p><a href="${url}">${newArtists}</a> ${popularity} </p>`
                 $('#testDiv').append(artistList);
             }    
         }
@@ -52,10 +58,11 @@ let artistSuccess = (res) => {
 
 $('.fas').on('click', (e) => {
     e.preventDefault();
+    $('#testDiv').empty();
     let artist = $("#artistSearch").val();
     $.ajax({
         method: 'GET',
-        url: `https://api.spotify.com/v1/search/?q=${artist}&type=artist`,
+        url: `https://api.spotify.com/v1/search/?q="${artist}"&type=artist`,
         headers: {
             'Authorization': 'Bearer ' + accessToken
         }, 

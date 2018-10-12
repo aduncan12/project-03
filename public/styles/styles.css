@@ -81,14 +81,21 @@ footer {
 
 a {
     text-decoration: none;
-    color: #000000;
+    color: #DDDDDD;
 }
 
 a:hover {
     text-decoration: underline;
-    color: #000000;
+    color: #DDDDDD;
 }
 
 #testDiv {
     color: #DDDDDD;
+    width: 50vw;
+    height: 25vh;
+    margin: 2% auto;
+    overflow-y: auto;
+    background: transparent;
+    display: none;
+    /* position: absolute; */
 }

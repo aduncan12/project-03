@@ -8,13 +8,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/styles.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous" defer></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" defer></script>
     <script src="scripts/app.js" defer></script>
+    
     <title>PRJCT3</title>
 
 </head>
 <body>
     <nav>
-        <button id="signUp">Sign Up</button>
+        <button id="signUp" data-toggle="modal" data-target="#exampleModalCenter">Sign Up</button>
         <button id="logIn">Log In</button>
     </nav>
 
@@ -25,6 +27,36 @@
             <i class="fas fa-search"></i>
         </div>
         <div id="testDiv"></div>
+
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <form id="formSignUp" autocomplete="off">
+                        <p>Create an account:</p>
+                        <div class="modal-body">
+                            <div>
+                                <input type="text" class="signUp" id="signUpName" name="name" placeholder="Username" required>
+                            </div>
+                            <div>
+                                <input type="email" class="signUp" id="signUpEmail" name="email" placeholder="Email Address" required>
+                            </div>
+                            <div>
+                                <input type="password" class="signUp" id="signUpPassword" name="password" placeholder="Password" required>
+                            </div>
+                            <!-- <p id="duplicateMessage" class="error-message">Account already exists</p> -->
+                        </div>
+                        <div class="modal-footer">
+                            <button id="signUpSubmit" type="submit" class="btn btn-secondary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
 </main>
 
     <footer>

@@ -72,15 +72,71 @@ $('.fas').on('click', (e) => {
     });
 })
 
-$('#signUp').on('click', (e) => {
+$('#signUpSubmit').on('click', (e) => {
     e.preventDefault();
-    console.log('sign up')
-})
+    let newUser = {
+        username: $('#signUpName').val(),
+        email: $('#signUpEmail').val(),
+        password: $('#signUpPassword').val(),
+    }
+    
+    $.ajax({
+        method: 'POST',
+        url:'/api/signup',
+        data: newUser,
+        success: signUpSuccess,
+        error: signUpError
+    });
+});
+
+signUpSuccess = (json) => {
+    console.log(json);
+    // $('.modal-body .error-message').fadeOut(500);
+    // setTimeout(function() { alert("User created. Thanks for creating an account with us."); }, 1000);
+    // setTimeout(function () {window.location.pathname = '/';}, 1500);
+}
+
+signUpError = (json) => {
+    $('#formSignUp input').each(function () {
+    if ( $(this).val().length === 0) {
+        $('#duplicateMessage').fadeOut();
+        $(this).siblings().fadeIn(1000);
+        return;
+    }
+    if ( $(this).val().length !== 0) {
+        $('#duplicateMessage').fadeOut();
+        $(this).siblings().fadeOut(200);
+        return;
+    }
+});
+    if (json.status === 500){
+        $('#duplicateMessage').fadeOut();
+        $('#emailValidation').fadeIn().text('Please enter a valid email address.');
+    }
+    if (json.status === 409){
+        $('#duplicateMessage').fadeOut();
+        $('#duplicateMessage').fadeIn();
+    }
+};
 
 $('#logIn').on('click', (e) => {
     e.preventDefault();
     console.log('log in')
 })
+
+loginSuccess = (json) => {
+    console.log('worked')
+    $('main p').first('.error-message').fadeOut();
+    setTimeout(function () {
+        window.location.pathname = '/map';}, 500);
+}   
+
+loginError = (json) => {
+    console.log(json)
+    $('main p').first('.error-message').fadeOut(200);
+    $('main p').first('.error-message').fadeIn(500);
+        $('main p').css('display', 'flex');
+}
 
 $('#about').on('click', (e) => {
     e.preventDefault();

@@ -7,7 +7,7 @@ const db = require('./models')
 const config = require('./config/config')
 const passport = require('./config/passport')
 
-const key = process.env.SECRET_KEY
+// const key = process.env.SECRET_KEY
 
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -34,11 +34,13 @@ app.get('/api', (req, res) => {
             {method: "GET", path: "/api/artists", description: "View all artists"}, 
             {method: "GET", path: "/api/user/:id", description: "View all users by id"}, 
             {method: "GET", path: "/api/comments", description: "View all comments"},
+            {method: "POST", path: "/api/signup", description: "Sign up users"},
+            {method: "POST", path: "/api/login", description: "User log in"}
         ]
     })
 });
 
-app.post('/signup', (req, res) => {
+app.post('/api/signup', (req, res) => {
     db.User.find({username: req.body.username})
     .select('+password')
     .exec()
@@ -49,7 +51,6 @@ app.post('/signup', (req, res) => {
             })
         } else {
             bcrypt.hash(req.body.password, 10, (err, hash) => {
-                console.log(req.body.password)
                 if(err){ 
                     res.status(500).json({error: err})
                 } else {
@@ -58,10 +59,10 @@ app.post('/signup', (req, res) => {
                         email: req.body.email,
                         password: hash,
                     });
-                    db.User.create(userToCreate, (err, users) => {
+                    db.User.create(userToCreate, (err, newUser) => {
                         if(err){console.log(err);}
                             const token = jwt.sign(
-                                {users},
+                                {newUser},
                                 //find way to hide key
                                 'key',
                                 {
@@ -71,7 +72,7 @@ app.post('/signup', (req, res) => {
                                     if(err){res.json(err)}
                                     res.status(200).json({
                                         message: 'User Created',
-                                        users,
+                                        newUser,
                                         token
                                     })
                                 }
@@ -83,7 +84,7 @@ app.post('/signup', (req, res) => {
     })
 });
 
-app.post('/login', (req, res) => {
+app.post('/api/login', (req, res) => {
     db.User.find({username: req.body.username})
         .select('+password')
         .exec()

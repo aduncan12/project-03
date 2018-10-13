@@ -1,17 +1,20 @@
 const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
+    User = require('./user')
+    Artist = require('./artist')
+
 
 const commentsSchema = new Schema({
-    username: [{
+    username: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
-    }],   
-    artist: [{ 
+    },   
+    artist: { 
         type: Schema.Types.ObjectId,
-        ref: 'Music', 
+        ref: 'Artist', 
         required: true
-    }],
+    },
     content: {
         type: String
     },

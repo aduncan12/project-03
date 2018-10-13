@@ -1,6 +1,7 @@
-let accessToken = 'BQBMYyz0WnQ8X3j88fWrXJivyVryxDX__VMSUM7JwXXeQbuJpSEMKPSdwbSRBU-_IlhMVoHHZBBwpgLfjC68rjMtNcXJOC8cvT2ka6O3XITjvSMuX3m7JyBzMNhgA1jXjqkZewAHb8JOgie2H5bUMYf-fsJkcJ3Oo7de4A&refresh_token=AQCPfhA1QnoVz9rqxomGZ3rjDfue3To3gxPD-rdb5LXp39kengO2wFYl_aiH52M95F2lwy00cdcar0SIXN9l3D_AlFfQ5S6jPNgNXrwUgTJ2NMEWuTvtTSrjLTsaeacA--ybXg';
+let accessToken = 'BQAFeWf46U1DGxXSH9sz2UL5ngaR9hPAW9hPD7BIOVQk1jh70Y2KQ6n3D7njm-SWSgoEKECkmctUajeEK_4v0vVww9-uL7J8L7kB1MYLpf5mr_-qOfCDsm-UHF_6hsAdWORcto71eygJGMlJ8lAu0z2pJsAbjJaBaRE76g';
 
 let artistSuccess = (res) => {
+// create if statement to match artist variable with res.artists.items
     let artistId = res.artists.items[0].id;
     $('#testDiv').css('display', 'inline')
     $('#search').css('display', 'block')
@@ -22,7 +23,7 @@ let artistSuccess = (res) => {
             'Authorization': 'Bearer ' + accessToken
         }, 
         success: recommend = (res) => {
-            // console.log(res)
+            console.log(res)
             for (i=0; i < res.artists.length; i++) {
                 let newArtists = res.artists[i].name
                 let popularity = res.artists[i].popularity
@@ -59,7 +60,7 @@ let artistSuccess = (res) => {
 $('.fas').on('click', (e) => {
     e.preventDefault();
     $('#testDiv').empty();
-    let artist = $("#artistSearch").val();
+    let artist = $('#artistSearch').val();
     $.ajax({
         method: 'GET',
         url: `https://api.spotify.com/v1/search/?q="${artist}"&type=artist`,

@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/3000', { useNewUrlParser: true } );
+mongoose.connect('mongodb://localhost/project03', { useNewUrlParser: true } );
 
 const User = require('./user');
 const Artist = require('./artist');
 const Song = require('./song');
 const Comments = require('./comments');
 
-exports.User = User;
-exports.Artist = Artist;
-exports.Song = Song;
-exports.Comments = Comments;
+module.exports = {
+    User: User,
+    Artist: Artist,
+    Song: Song,
+    Comments: Comments
+}

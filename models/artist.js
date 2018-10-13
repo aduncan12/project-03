@@ -2,8 +2,7 @@ const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 const artistSchema = new Schema({
-    id: { type: Number },
-    artist: { type: String },
+    name: { type: String },
     image: { type: String },
     popularity: { type: Number },
     genre: { type: String },

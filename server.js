@@ -11,15 +11,24 @@ const passport = require('./config/passport')
 
 
 app.use(bodyParser.urlencoded({ extended: false }))
-    .use(bodyParser.json())
-    .use(express.static(__dirname + '/public'))
+app.use(bodyParser.json())
+app.use(express.static(__dirname + '/public'))
 
 //html endpoints
 app.get('/', (req, res) => 
     res.sendFile(__dirname + '/views/index.html'));
-app.get('/login', (req, res) =>
-    res.sendFile(__dirname + '/views/login.html'));
-app.get('/user', (req, res) => res.json(user));
+
+app.get('/main', (req, res) => 
+    res.sendFile(__dirname + '/views/main.html'));
+
+app.get('/profile', verifyToken, (req, res) => 
+    res.sendFile(__dirname + '/views/profile.html'));
+
+app.post('/verify', verifyToken, (req, res) => {
+    let verified= jwt.verify(req.token, 'key')
+    res.json(verified)
+})
+
 
 //api endpoints
 app.get('/artist', (req, res) => res.json(artist));
@@ -66,7 +75,7 @@ app.post('/api/signup', (req, res) => {
                                 //find way to hide key
                                 'key',
                                 {
-                                    expiresIn: '5h'
+                                    expiresIn: '24h'
                                 },
                                 (err, token) => {
                                     if(err){res.json(err)}
@@ -105,7 +114,7 @@ app.post('/api/login', (req, res) => {
                 }, 
                 "key",
                 {
-                    expiresIn: "5h"
+                    expiresIn: "24h"
                 },
             );
             return res.status(200).json(
@@ -155,5 +164,24 @@ app.get('/api/songs', (req, res) => {
         res.json({songsAll});
     });
 });
+
+function verifyToken (req, res, next) {
+    console.log("in verify...");
+    const bearerHeader = req.headers['authorization'];
+    console.log(bearerHeader)
+    if(typeof bearerHeader !== 'undefined'){
+        const bearer = bearerHeader.split('');
+        // Get token from array
+        const bearerToken = bearer[1];
+        // Set the token
+        req.token = bearerToken;
+        // Next middleware
+        next();
+
+    } else {
+        // Forbidden
+        res.sendStatus(403);
+    }
+}
 
 app.listen(process.env.PORT || 3000, () => console.log('Red 5 standing by at http://localhost:3000/'));

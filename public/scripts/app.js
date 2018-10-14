@@ -1,4 +1,7 @@
 let accessToken = 'BQAFeWf46U1DGxXSH9sz2UL5ngaR9hPAW9hPD7BIOVQk1jh70Y2KQ6n3D7njm-SWSgoEKECkmctUajeEK_4v0vVww9-uL7J8L7kB1MYLpf5mr_-qOfCDsm-UHF_6hsAdWORcto71eygJGMlJ8lAu0z2pJsAbjJaBaRE76g';
+localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
+
+// checkForLogin();
 
 let artistSuccess = (res) => {
 // create if statement to match artist variable with res.artists.items
@@ -91,9 +94,9 @@ $('#signUpSubmit').on('click', (e) => {
 
 signUpSuccess = (json) => {
     console.log(json);
-    // $('.modal-body .error-message').fadeOut(500);
-    // setTimeout(function() { alert("User created. Thanks for creating an account with us."); }, 1000);
-    // setTimeout(function () {window.location.pathname = '/';}, 1500);
+    $('.modal-body .error-message').fadeOut(500);
+    setTimeout(function() { alert("User created. Thanks for creating an account with us."); }, 1000);
+    setTimeout(function () {window.location.pathname = '/main.html';}, 1500);
 }
 
 signUpError = (json) => {
@@ -119,23 +122,62 @@ signUpError = (json) => {
     }
 };
 
-$('#logIn').on('click', (e) => {
+$('#formLogin').on('submit', function (e) {
     e.preventDefault();
-    console.log('log in')
+    let user = {
+        username:$('#username').val(),
+        password: $('#password').val()
+    }
+    console.log(user)   
+
+    $.ajax({
+        method: 'POST',
+        url: '/api/login',
+        data: user,
+        success: loginSuccess,
+        error: loginError
+    });
 })
 
 loginSuccess = (json) => {
-    console.log('worked')
-    $('main p').first('.error-message').fadeOut();
+    console.log(json)
+    $('main').first('.error-message').fadeOut();
+    // localStorage.clear();
+    // localStorage.setItem('token', json.token)
+    console.log(localStorage.token)
     setTimeout(function () {
-        window.location.pathname = '/map';}, 500);
-}   
+        window.location.pathname = '/main';}, 500);
+}  
 
 loginError = (json) => {
     console.log(json)
-    $('main p').first('.error-message').fadeOut(200);
-    $('main p').first('.error-message').fadeIn(500);
-        $('main p').css('display', 'flex');
+    $('main').first('.error-message').fadeOut(200);
+    $('main').first('.error-message').fadeIn(500);
+        $('main').css('display', 'flex');
+}
+
+function checkForLogin() {
+    if(localStorage.length > 0){
+
+    let jwt = localStorage.token
+        $.ajax({
+            method: "POST", 
+            url: '/verify',  
+            beforeSend: function (xhr) {   
+                xhr.setRequestHeader("Authorization", 'Bearer ' + jwt);   
+            }
+        }).done(function (response) {
+            console.log(response)
+            user = { username: response.username, _id: response._id }
+            console.log("you can access variable user: " , user)
+                $('#message').text(`Welcome, ${ response.username || response.result.username } `)
+
+        }).fail(function (e1, e2, e3) {
+        console.log(e2);
+        });
+    } else {
+        console.log('error: no local storage')
+    }
 }
 
 $('#about').on('click', (e) => {

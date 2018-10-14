@@ -23,13 +23,13 @@ nav {
     
 }
 
-#signUp, #logIn {
+#signUp, #logInButton, #profile {
     margin: 0 2%;
     border: none;
     background-color: #DDDDDD;
 }
 
-#signUp:hover, #logIn:hover {
+#signUp:hover, #logInButton:hover {
     cursor: pointer;
 }
 
@@ -100,3 +100,6 @@ a:hover {
     /* position: absolute; */
 }
 
+#about {
+    color: #000000;
+}

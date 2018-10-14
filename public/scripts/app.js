@@ -1,4 +1,4 @@
-let accessToken = 'BQDhB8t-dHyaSak5wtl57L8yl5EZKEbrV8KZ6Qr8mO2fd_3PbPl99Tqxnhd9I2IUTy3OMo-lVPpbpLITF2U51XDhQ1Rw8WM9flMaWqa6GZ8sVoay2JtNVkhQ_01oYxe-AJMMX8jVJavZ0vz_Z4OH-IF-if7zmrtAsYFuig&refresh_token=AQDcgZM1_SJxiXeZItRwHGT_cik1MvZdsZ8ZxMEW_noiwM4XB5XeUI7kmkAtTcd9elxINoEhd8CNhBfDJnyqEBpmVXLQKIjvh_Ya2dyLXcvBN15ySWUOchTQGsQwwCwdRe-R3w';
+let accessToken = 'BQBGTHbzUXP2Lrrsj_0BH2xZBL3qx8m_y6PPUTmByNQUBgtOv5Qf2mDuYjtljd2P1c6MY7WPnA-EvJInEQBI-Ew5hGImS9ohsgadqxFHPaTPpJUckOG8BzwahWNvsTa8lf6lpj7h3a41At1OoDpQTXpIeTF-pE1KDAYnnw&refresh_token=AQAP9fZfZX0IdFhecnC56wZmrQ0Gk_YjBqgxWFPPabY8I1fPpXchp8SL5cPP0rZkLpQ_wJvpDSZ_TALWn8I3Lokjb8hTAtZOYpc-Ij-PgXBjqul81QvTO4iREty_0TC15yGf7g';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
@@ -186,8 +186,8 @@ function checkForLogin() {
 
 $('#about').on('click', (e) => {
     e.preventDefault();
-    console.log('about')
-})
+    setTimeout(function () {
+        window.location.pathname = '/about';}, 500);})
 
 $('#logOut').on('click', (e) => {
     e.preventDefault();

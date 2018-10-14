@@ -21,8 +21,11 @@ app.get('/', (req, res) =>
 app.get('/main', (req, res) => 
     res.sendFile(__dirname + '/views/main.html'));
 
-// app.get('/profile', (req, res) => 
-//     res.sendFile(__dirname + '/views/profile.html'));
+app.get('/profile', (req, res) => 
+    res.sendFile(__dirname + '/views/profile.html'));
+
+app.get('/about', (req, res) => 
+    res.sendFile(__dirname + '/views/about.html'));
 
 app.post('/verify', verifyToken, (req, res) => {
     let verified = jwt.verify(req.token, 'key')

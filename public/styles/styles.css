@@ -29,7 +29,7 @@ nav {
     background-color: #DDDDDD;
 }
 
-#signUp:hover, #logInButton:hover {
+#signUp:hover, #logInButton:hover, #profile {
     cursor: pointer;
 }
 
@@ -103,3 +103,4 @@ a:hover {
 #about {
     color: #000000;
 }
+

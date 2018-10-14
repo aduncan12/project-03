@@ -1,7 +1,7 @@
 let accessToken = 'BQAFeWf46U1DGxXSH9sz2UL5ngaR9hPAW9hPD7BIOVQk1jh70Y2KQ6n3D7njm-SWSgoEKECkmctUajeEK_4v0vVww9-uL7J8L7kB1MYLpf5mr_-qOfCDsm-UHF_6hsAdWORcto71eygJGMlJ8lAu0z2pJsAbjJaBaRE76g';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
-// checkForLogin();
+checkForLogin();
 
 let artistSuccess = (res) => {
 // create if statement to match artist variable with res.artists.items
@@ -142,9 +142,9 @@ $('#formLogin').on('submit', function (e) {
 loginSuccess = (json) => {
     console.log(json)
     $('main').first('.error-message').fadeOut();
-    // localStorage.clear();
-    // localStorage.setItem('token', json.token)
-    console.log(localStorage.token)
+    localStorage.clear();
+    localStorage.setItem('token', json.token)
+    console.log(json.token)
     setTimeout(function () {
         window.location.pathname = '/main';}, 500);
 }  
@@ -164,10 +164,10 @@ function checkForLogin() {
             method: "POST", 
             url: '/verify',  
             beforeSend: function (xhr) {   
-                xhr.setRequestHeader("Authorization", 'Bearer ' + jwt);   
+                xhr.setRequestHeader("Authorization", 'Bearer ' + localStorage.token);   
             }
         }).done(function (response) {
-            console.log(response)
+            // console.log(response)
             user = { username: response.username, _id: response._id }
             console.log("you can access variable user: " , user)
                 $('#message').text(`Welcome, ${ response.username || response.result.username } `)

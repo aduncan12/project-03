@@ -27,6 +27,7 @@ app.get('/profile', verifyToken, (req, res) =>
 app.post('/verify', verifyToken, (req, res) => {
     let verified= jwt.verify(req.token, 'key')
     res.json(verified)
+    console.log(req.user)
 })
 
 
@@ -168,9 +169,8 @@ app.get('/api/songs', (req, res) => {
 function verifyToken (req, res, next) {
     console.log("in verify...");
     const bearerHeader = req.headers['authorization'];
-    console.log(bearerHeader)
     if(typeof bearerHeader !== 'undefined'){
-        const bearer = bearerHeader.split('');
+        const bearer = bearerHeader.split(' ');
         // Get token from array
         const bearerToken = bearer[1];
         // Set the token

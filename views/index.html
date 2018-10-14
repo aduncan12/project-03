@@ -15,8 +15,10 @@
 
 </head>
 <body>
+    
     <nav id="indexNav">
-        <button id="signUp" data-toggle="modal" data-target="#exampleModalCenter">Sign Up</button>
+        <img id="logo" src="/images/records.jpeg" width="30" height="30" class="d-inline-block align-top" alt="">
+        <button id="signUp" data-toggle="modal" data-target="#exampleModal">Sign Up</button>
         <button id="logInButton" data-toggle="modal" data-target="#exampleModalCenter">Log In</button>
     </nav>
 
@@ -29,7 +31,7 @@
         <div id="testDiv"></div>
 
 <!-- sign up modal -->
-<!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -57,35 +59,35 @@
             </form>
         </div>
         </div>
-    </div> -->
+    </div>
 
 <!-- log in modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <form id="formLogin" autocomplete="off">
+                    <p>Log In:</p>
+                    <div class="modal-body">
+                        <div>
+                            <input type="text" class="logIn" id="username" name="name" placeholder="Username" required>
+                        </div>
+                        <div>
+                            <input type="password" class="logIn" id="password" name="password" placeholder="Password" required>
+                        </div>
+                        <!-- <p id="duplicateMessage" class="error-message">Account already exists</p> -->
                     </div>
-                    <form id="formLogin" autocomplete="off">
-                        <p>Log In:</p>
-                        <div class="modal-body">
-                            <div>
-                                <input type="text" class="logIn" id="username" name="name" placeholder="Username" required>
-                            </div>
-                            <div>
-                                <input type="password" class="logIn" id="password" name="password" placeholder="Password" required>
-                            </div>
-                            <!-- <p id="duplicateMessage" class="error-message">Account already exists</p> -->
-                        </div>
-                        <div class="modal-footer">
-                            <button id="logInSubmit" type="submit" class="btn btn-secondary">Submit</button>
-                        </div>
-                    </form>
-                </div>
-                </div>
+                    <div class="modal-footer">
+                        <button id="logInSubmit" type="submit" class="btn btn-secondary">Submit</button>
+                    </div>
+                </form>
             </div>
+            </div>
+        </div>
 
 </main>
 

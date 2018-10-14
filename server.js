@@ -21,11 +21,11 @@ app.get('/', (req, res) =>
 app.get('/main', (req, res) => 
     res.sendFile(__dirname + '/views/main.html'));
 
-app.get('/profile', verifyToken, (req, res) => 
-    res.sendFile(__dirname + '/views/profile.html'));
+// app.get('/profile', (req, res) => 
+//     res.sendFile(__dirname + '/views/profile.html'));
 
 app.post('/verify', verifyToken, (req, res) => {
-    let verified= jwt.verify(req.token, 'key')
+    let verified = jwt.verify(req.token, 'key')
     res.json(verified)
     console.log(req.user)
 })
@@ -113,14 +113,14 @@ app.post('/api/login', (req, res) => {
                 email: users[0].email,
                 _id: users[0]._id
                 }, 
-                "key",
+                'key',
                 {
                     expiresIn: "24h"
                 },
             );
             return res.status(200).json(
                 {
-                message: 'Auth successful',
+                message: 'Authenticated',
                 token
                 }
             )
@@ -174,7 +174,8 @@ function verifyToken (req, res, next) {
         // Get token from array
         const bearerToken = bearer[1];
         // Set the token
-        req.token = bearerToken;
+        req.token = 'Bearer ' + bearerToken;
+        console.log(req.token)
         // Next middleware
         next();
 

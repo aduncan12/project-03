@@ -95,9 +95,13 @@ $('#signUpSubmit').on('click', (e) => {
 signUpSuccess = (json) => {
     console.log(json);
     $('.modal-body .error-message').fadeOut(500);
-    setTimeout(function() { alert("User created. Thanks for creating an account with us."); }, 1000);
-    setTimeout(function () {window.location.pathname = '/main.html';}, 1500);
-}
+    localStorage.clear();
+    localStorage.setItem('token', json.token)
+    console.log(json.token)
+    setTimeout(function () {
+        window.location.pathname = '/main';}, 500);
+}  
+
 
 signUpError = (json) => {
     $('#formSignUp input').each(function () {
@@ -145,8 +149,8 @@ loginSuccess = (json) => {
     localStorage.clear();
     localStorage.setItem('token', json.token)
     console.log(json.token)
-    setTimeout(function () {
-        window.location.pathname = '/main';}, 500);
+    // setTimeout(function () {
+    //     window.location.pathname = '/main';});
 }  
 
 loginError = (json) => {
@@ -163,11 +167,11 @@ function checkForLogin() {
         $.ajax({
             method: "POST", 
             url: '/verify',  
-            beforeSend: function (xhr) {   
-                xhr.setRequestHeader("Authorization", 'Bearer ' + localStorage.token);   
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", 'Bearer ' + jwt);  
             }
         }).done(function (response) {
-            // console.log(response)
+            console.log(response)
             user = { username: response.username, _id: response._id }
             console.log("you can access variable user: " , user)
                 $('#message').text(`Welcome, ${ response.username || response.result.username } `)
@@ -183,4 +187,23 @@ function checkForLogin() {
 $('#about').on('click', (e) => {
     e.preventDefault();
     console.log('about')
+})
+
+$('#logOut').on('click', (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    setTimeout(function () {
+        window.location.pathname = '/';}, 500);
+})
+
+$('#profile').on('click', (e) => {
+    e.preventDefault();
+    setTimeout(function () {
+        window.location.pathname = '/profile';}, 500);
+})
+
+$('#mainSearch').on('click', (e) => {
+    e.preventDefault();
+    setTimeout(function () {
+        window.location.pathname = '/main';}, 500);
 })

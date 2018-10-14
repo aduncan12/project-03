@@ -85,6 +85,13 @@ main {
     justify-content: space-between;
 }
 
+#searchDiv {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    align-items: center;
+}
+
 h1 {
     color: #DDDDDD;
     margin: 15% 0;
@@ -118,6 +125,16 @@ h1 {
     margin: auto 5%;    
 }
 
+.resultsDiv {
+    color: #DDDDDD;
+    height: 25vh;
+    margin: 2% auto;
+    overflow-y: auto;
+    background: transparent;
+    display: none;
+    /* position: absolute; */
+}
+
 #savedSongs, #savedArtists {
     padding: 2%;
     background-color: #DDDDDD;
@@ -147,16 +164,6 @@ a:hover {
     color: #DDDDDD;
 }
 
-#testDiv {
-    color: #DDDDDD;
-    width: 50vw;
-    height: 25vh;
-    margin: 2% auto;
-    overflow-y: auto;
-    background: transparent;
-    display: none;
-    /* position: absolute; */
-}
 
 #about {
     color: #000000;

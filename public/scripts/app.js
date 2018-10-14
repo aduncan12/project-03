@@ -1,4 +1,4 @@
-let accessToken = 'BQAFeWf46U1DGxXSH9sz2UL5ngaR9hPAW9hPD7BIOVQk1jh70Y2KQ6n3D7njm-SWSgoEKECkmctUajeEK_4v0vVww9-uL7J8L7kB1MYLpf5mr_-qOfCDsm-UHF_6hsAdWORcto71eygJGMlJ8lAu0z2pJsAbjJaBaRE76g';
+let accessToken = 'BQDhB8t-dHyaSak5wtl57L8yl5EZKEbrV8KZ6Qr8mO2fd_3PbPl99Tqxnhd9I2IUTy3OMo-lVPpbpLITF2U51XDhQ1Rw8WM9flMaWqa6GZ8sVoay2JtNVkhQ_01oYxe-AJMMX8jVJavZ0vz_Z4OH-IF-if7zmrtAsYFuig&refresh_token=AQDcgZM1_SJxiXeZItRwHGT_cik1MvZdsZ8ZxMEW_noiwM4XB5XeUI7kmkAtTcd9elxINoEhd8CNhBfDJnyqEBpmVXLQKIjvh_Ya2dyLXcvBN15ySWUOchTQGsQwwCwdRe-R3w';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
@@ -6,7 +6,7 @@ checkForLogin();
 let artistSuccess = (res) => {
 // create if statement to match artist variable with res.artists.items
     let artistId = res.artists.items[0].id;
-    $('#testDiv').css('display', 'inline')
+    $('.resultsDiv').css('display', 'inline')
     $('#search').css('display', 'block')
     // let matches = res.artists.items
     //     console.log(matches)
@@ -33,7 +33,7 @@ let artistSuccess = (res) => {
                 let url = res.artists[i].external_urls.spotify
                 let artistList = 
                 `<p><a href="${url}">${newArtists}</a> ${popularity} </p>`
-                $('#testDiv').append(artistList);
+                $('.resultsDiv').append(artistList);
             }    
         }
     })
@@ -54,7 +54,7 @@ let artistSuccess = (res) => {
     //             <p> ${recommendations} </p>
     //             </li>`
 
-    //             $('#testDiv').append(artistList);
+    //             $('.resultsDiv').append(artistList);
     //         }    
     //     }
     // })
@@ -62,7 +62,7 @@ let artistSuccess = (res) => {
 
 $('.fas').on('click', (e) => {
     e.preventDefault();
-    $('#testDiv').empty();
+    $('.resultsDiv').empty();
     let artist = $('#artistSearch').val();
     $.ajax({
         method: 'GET',

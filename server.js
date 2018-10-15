@@ -48,7 +48,8 @@ app.get('/api', (req, res) => {
             {method: "GET", path: "/api/user/:id", description: "View all users by id"}, 
             {method: "GET", path: "/api/comments", description: "View all comments"},
             {method: "POST", path: "/api/signup", description: "Sign up users"},
-            {method: "POST", path: "/api/login", description: "User log in"}
+            {method: "POST", path: "/api/login", description: "User log in"},
+            {method: "POST", path: "/api/addartist", description: "Add Artist Info"}
         ]
     })
 });
@@ -137,6 +138,16 @@ app.post('/api/login', (req, res) => {
             res.status(500).json({err})
         })
 })
+
+// app.post('/api/addartist', (req, res) => {
+//     db.Artist.find({name: req.body.name})
+//         .exec()
+//         .then( artist => {
+//             if (artist.length >= 1) {
+//                 return res.status(409).json({
+//                     message: "artist is already saved"
+//                 })
+//             } else {
 
 app.get('/api/users', (req, res) => {
     db.User.find( {}, (err, usersAll) => {

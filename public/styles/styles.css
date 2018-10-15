@@ -69,15 +69,19 @@ body {
     width: 50%;
 }
 
-#signUp, #logInButton, #profile, #logOut, #mainSearch, #artistButton {
+#signUp, #logInButton, #profile, #logOut, #mainSearch, .artistButton {
     margin: 0 2%;
     border: none;
     background-color: transparent;
     /* padding: 1%; */
 }
 
-#artistButton {
+.artistButton {
     color: #DDDDDD;
+}
+
+#artistModalHeader {
+    margin: auto;
 }
 
 #signUp:hover, #logInButton:hover, #profile, #logOut, #mainSearch, #artistButton {
@@ -152,12 +156,13 @@ h1 {
 
 .resultsDiv {
     color: #DDDDDD;
-    height: 32vh;
+    width: 31vw;
     margin: 2% auto;
     overflow-y: auto;
     background: transparent;
     display: none;
-    /* position: absolute; */
+    flex-flow: column wrap;
+    justify-content: center;
 }
 
 #savedSongs, #savedArtists {

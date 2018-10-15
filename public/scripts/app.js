@@ -1,4 +1,4 @@
-let accessToken = 'BQB500ieOibCk2LKHXymatrrgHmaG5CnnEn8bLH0rEk5IuKDjHZ27JI-wx3nY-tRIQRd1Ip05Ac_JPB6n8HpQLQynaE-wRmfyF7U4kMXR6en76LE5VzBFBexKhN-bt_zxPhqp3MrEZHGsy6HVz5zuJEJKwaOEp2Os78UKA&refresh_token=AQBH1F9ohaGKi_nKu3Zb7u-CQC4X4sRPy9GNg9fWa1GDBBtNLIc5vOfU3M48ZgHoD2Cn4YYojUSNKpXmbsjZXHksQNQMDeK3RMrb_3x6TIrEiz4uHVnGXpdtU6BgyicRf36Fzw';
+let accessToken = 'BQB7GU4pTVhaIa0XTM-GYm5WxG5FSn3eqd1zIQV3NlBGRh5FYVcz055hHsFeCfOKjV-h_19XnW9X_XMQ1w7TFTrdoufwaWY9f2uLz2ZUIaaSmI4HWku0aT_mR91yN-Kwl2sM-K6wBXd0BjColp3CVEnYWC2GKrsXOK8ZoA&refresh_token=AQADFaGiOu_5erO08cbRR1rcEXrX8vgMPyAiDvjZVdtdALx8W6aN07DwyET5Wbc7uKjQ41qaKAcGVKHUGnMjkJ7gphulvnSDSsQW9ctyql8zfYs1Su_kqDSSbGeiMUFTUSRRvg';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
@@ -6,7 +6,6 @@ checkForLogin();
 let newArtistsArray = [];
 
 function artistGet() {
-    console.log(newArtistsArray[0])
     let arr = newArtistsArray[0]
     for (i=0; i < arr.length; i++) {
         let newArtists = arr[i].name
@@ -15,26 +14,39 @@ function artistGet() {
         let url = arr[i].external_urls.spotify
         let followers = arr[i].followers.total
         let artistList = 
-        `<p><button id="artistButton" data-toggle="modal" data-target="#artistModal">${newArtists}</button> - <a href="${url}">Spotify</a></p>
-        <p> ${genres}</p>`
+        `<button class="artistButton" data-toggle="modal" data-target="#artistModal" data-id="${newArtists}">${newArtists}</button>`
         $('.resultsDiv').append(artistList);
     }
-    $('#artistButton').on('click', (e) => {
+    $('.artistButton').on('click', (e) => {
         e.preventDefault();
-        console.log('test')
-        let newArtistArray = []
+        let artistName = e.target.getAttribute('data-id');
+        console.log(artistName)
+        // console.log(arr)
         for (i=0; i < arr.length; i++) {
-            let newArtist = arr[i].name
-            newArtistArray.push(newArtist)
-            console.log(newArtistArray)
-        }
+            if (artistName == arr[i].name) {
+                let modalPopulate = 
+                `<img src="${arr[i].images[0].url}" height="185" width="250">
+                <a href="${arr[i].external_urls.spotify}">${arr[i].name}</a>`
+                $('#artistModalBody').empty()
+                $('#artistModalHeader').empty()
+                $('#artistModalBody').append(`<p>Genre(s): ${arr[i].genres}</p>`)
+                $('#artistModalHeader').append(modalPopulate)
+            }
+        }        
+    })
+    $('#artistAdd').on('click', (e) => {
+        e.preventDefault();
+        console.log(newArtistsArray)
     }) 
 }
+
+
 
 let artistSuccess = (res) => {
 // create if statement to match artist variable with res.artists.items
     let artistId = res.artists.items[0].id;
     $('.resultsDiv').css('display', 'inline')
+    // $('.resultsDiv').css('flex-direction', 'column')
     $('#search').css('display', 'block')
     // let matches = res.artists.items
     //     console.log(matches)
@@ -54,7 +66,7 @@ let artistSuccess = (res) => {
             'Authorization': 'Bearer ' + accessToken
         }, 
         success: recommend = (res) => {
-            newArtistsArray= []
+            newArtistsArray = []
             newArtistsArray.push(res.artists)
         }
         
@@ -231,5 +243,3 @@ $('#mainSearch').on('click', (e) => {
     setTimeout(function () {
         window.location.pathname = '/main';}, 500);
 })
-
-   

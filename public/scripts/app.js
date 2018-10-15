@@ -1,4 +1,4 @@
-let accessToken = 'BQBGTHbzUXP2Lrrsj_0BH2xZBL3qx8m_y6PPUTmByNQUBgtOv5Qf2mDuYjtljd2P1c6MY7WPnA-EvJInEQBI-Ew5hGImS9ohsgadqxFHPaTPpJUckOG8BzwahWNvsTa8lf6lpj7h3a41At1OoDpQTXpIeTF-pE1KDAYnnw&refresh_token=AQAP9fZfZX0IdFhecnC56wZmrQ0Gk_YjBqgxWFPPabY8I1fPpXchp8SL5cPP0rZkLpQ_wJvpDSZ_TALWn8I3Lokjb8hTAtZOYpc-Ij-PgXBjqul81QvTO4iREty_0TC15yGf7g';
+let accessToken = 'BQAUw8QLTs_7Q6iqpAOTZkq2JJOFHmpn2ZXnmU4GnagQK-eJzo-aqVNFn5CDdye1yGFGO1nqA0Kg5--QzzHVoJDvtANY2q6uKzsBB-S8uCbvrMy7950kDKqEanmz4LKpadIaczfpmT6aYVExKs0_crNjLsHOZCbKlEAORg&refresh_token=AQCBAV6BBRptkxOxFtyKZvxUjOq1utbH1WyfhCI2hpEpL7IFgEUeQYs74lHGxrEsbEBeXIGb0SuiKDX6T7kNCndeiZH-85KI_ePXbQbC4SJiY1FnKbNou0znyb9Fgni9ylQZOg';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
@@ -30,9 +30,11 @@ let artistSuccess = (res) => {
             for (i=0; i < res.artists.length; i++) {
                 let newArtists = res.artists[i].name
                 let popularity = res.artists[i].popularity
+                let genres = res. artists[i].genres
                 let url = res.artists[i].external_urls.spotify
+                let followers = res.artists[i].followers.total
                 let artistList = 
-                `<p><a href="${url}">${newArtists}</a> ${popularity} </p>`
+                `<p><button id="artistButton" data-toggle="modal" data-target="#artistModal">${newArtists}</button> - ${genres} - <a href="${url}">Spotify</a></p>`
                 $('.resultsDiv').append(artistList);
             }    
         }
@@ -148,7 +150,6 @@ loginSuccess = (json) => {
     $('main').first('.error-message').fadeOut();
     localStorage.clear();
     localStorage.setItem('token', json.token)
-    console.log(json.token)
     setTimeout(function () {
         window.location.pathname = '/main';});
 }  
@@ -163,12 +164,12 @@ loginError = (json) => {
 function checkForLogin() {
     if(localStorage.length > 0){
 
-    // let jwt = localStorage.token
+    let jwt = localStorage.token
         $.ajax({
             method: "POST", 
             url: '/verify',  
             beforeSend: function (xhr) {
-                xhr.setRequestHeader("Authorization", 'Bearer ' + localStorage.token);  
+                xhr.setRequestHeader("Authorization", 'Bearer ' + jwt);  
             }
         }).done(function (response) {
             console.log(response)

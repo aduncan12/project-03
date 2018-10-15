@@ -15,6 +15,7 @@ app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'))
 
 //html endpoints
+//STILL NEED TO RESTRICT ACCESS WITH VERIFYTOKEN
 app.get('/', (req, res) => 
     res.sendFile(__dirname + '/views/index.html'));
 
@@ -183,7 +184,7 @@ function verifyToken (req, res, next) {
 
     } else {
         // Forbidden
-        res.sendStatus(403);
+        // res.sendStatus(403);
     }
 }
 

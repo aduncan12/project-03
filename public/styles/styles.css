@@ -63,14 +63,20 @@ body {
     width: 25%;
 }
 
-#signUp, #logInButton, #profile, #logOut, #mainSearch {
+#navUser {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+}
+
+#signUp, #logInButton, #profile, #logOut, #mainSearch, #artistButton {
     margin: 0 2%;
     border: none;
     background-color: #DDDDDD;
     /* padding: 1%; */
 }
 
-#signUp:hover, #logInButton:hover, #profile, #logOut, #mainSearch {
+#signUp:hover, #logInButton:hover, #profile, #logOut, #mainSearch, #artistButton {
     cursor: pointer;
 }
 

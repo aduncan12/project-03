@@ -30,7 +30,6 @@ app.get('/about', (req, res) =>
 app.post('/verify', verifyToken, (req, res) => {
     let verified = jwt.verify(req.token, 'key')
     res.json(verified)
-    console.log(req.user)
 })
 
 
@@ -177,7 +176,7 @@ function verifyToken (req, res, next) {
         // Get token from array
         const bearerToken = bearer[1];
         // Set the token
-        req.token = 'Bearer ' + bearerToken;
+        req.token = bearerToken;
         console.log(req.token)
         // Next middleware
         next();

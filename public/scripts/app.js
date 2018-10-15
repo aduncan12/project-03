@@ -149,8 +149,8 @@ loginSuccess = (json) => {
     localStorage.clear();
     localStorage.setItem('token', json.token)
     console.log(json.token)
-    // setTimeout(function () {
-    //     window.location.pathname = '/main';});
+    setTimeout(function () {
+        window.location.pathname = '/main';});
 }  
 
 loginError = (json) => {
@@ -163,12 +163,12 @@ loginError = (json) => {
 function checkForLogin() {
     if(localStorage.length > 0){
 
-    let jwt = localStorage.token
+    // let jwt = localStorage.token
         $.ajax({
             method: "POST", 
             url: '/verify',  
             beforeSend: function (xhr) {
-                xhr.setRequestHeader("Authorization", 'Bearer ' + jwt);  
+                xhr.setRequestHeader("Authorization", 'Bearer ' + localStorage.token);  
             }
         }).done(function (response) {
             console.log(response)

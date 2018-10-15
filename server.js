@@ -184,7 +184,7 @@ function verifyToken (req, res, next) {
 
     } else {
         // Forbidden
-        // res.sendStatus(403);
+        res.sendStatus(403);
     }
 }
 

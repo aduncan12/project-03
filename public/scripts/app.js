@@ -1,7 +1,35 @@
-let accessToken = 'BQAUw8QLTs_7Q6iqpAOTZkq2JJOFHmpn2ZXnmU4GnagQK-eJzo-aqVNFn5CDdye1yGFGO1nqA0Kg5--QzzHVoJDvtANY2q6uKzsBB-S8uCbvrMy7950kDKqEanmz4LKpadIaczfpmT6aYVExKs0_crNjLsHOZCbKlEAORg&refresh_token=AQCBAV6BBRptkxOxFtyKZvxUjOq1utbH1WyfhCI2hpEpL7IFgEUeQYs74lHGxrEsbEBeXIGb0SuiKDX6T7kNCndeiZH-85KI_ePXbQbC4SJiY1FnKbNou0znyb9Fgni9ylQZOg';
+let accessToken = 'BQB500ieOibCk2LKHXymatrrgHmaG5CnnEn8bLH0rEk5IuKDjHZ27JI-wx3nY-tRIQRd1Ip05Ac_JPB6n8HpQLQynaE-wRmfyF7U4kMXR6en76LE5VzBFBexKhN-bt_zxPhqp3MrEZHGsy6HVz5zuJEJKwaOEp2Os78UKA&refresh_token=AQBH1F9ohaGKi_nKu3Zb7u-CQC4X4sRPy9GNg9fWa1GDBBtNLIc5vOfU3M48ZgHoD2Cn4YYojUSNKpXmbsjZXHksQNQMDeK3RMrb_3x6TIrEiz4uHVnGXpdtU6BgyicRf36Fzw';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
+
+let newArtistsArray = [];
+
+function artistGet() {
+    console.log(newArtistsArray[0])
+    let arr = newArtistsArray[0]
+    for (i=0; i < arr.length; i++) {
+        let newArtists = arr[i].name
+        let popularity = arr[i].popularity
+        let genres = arr[i].genres
+        let url = arr[i].external_urls.spotify
+        let followers = arr[i].followers.total
+        let artistList = 
+        `<p><button id="artistButton" data-toggle="modal" data-target="#artistModal">${newArtists}</button> - <a href="${url}">Spotify</a></p>
+        <p> ${genres}</p>`
+        $('.resultsDiv').append(artistList);
+    }
+    $('#artistButton').on('click', (e) => {
+        e.preventDefault();
+        console.log('test')
+        let newArtistArray = []
+        for (i=0; i < arr.length; i++) {
+            let newArtist = arr[i].name
+            newArtistArray.push(newArtist)
+            console.log(newArtistArray)
+        }
+    }) 
+}
 
 let artistSuccess = (res) => {
 // create if statement to match artist variable with res.artists.items
@@ -26,19 +54,12 @@ let artistSuccess = (res) => {
             'Authorization': 'Bearer ' + accessToken
         }, 
         success: recommend = (res) => {
-            console.log(res)
-            for (i=0; i < res.artists.length; i++) {
-                let newArtists = res.artists[i].name
-                let popularity = res.artists[i].popularity
-                let genres = res. artists[i].genres
-                let url = res.artists[i].external_urls.spotify
-                let followers = res.artists[i].followers.total
-                let artistList = 
-                `<p><button id="artistButton" data-toggle="modal" data-target="#artistModal">${newArtists}</button> - ${genres} - <a href="${url}">Spotify</a></p>`
-                $('.resultsDiv').append(artistList);
-            }    
+            newArtistsArray= []
+            newArtistsArray.push(res.artists)
         }
-    })
+        
+    }).then(artistGet)
+
     // ajax request for recommended tracks
     // $.ajax({
     //     method: 'GET',
@@ -61,6 +82,8 @@ let artistSuccess = (res) => {
     //     }
     // })
 }
+
+
 
 $('.fas').on('click', (e) => {
     e.preventDefault();
@@ -208,3 +231,5 @@ $('#mainSearch').on('click', (e) => {
     setTimeout(function () {
         window.location.pathname = '/main';}, 500);
 })
+
+   

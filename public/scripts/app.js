@@ -8,6 +8,7 @@ let newTracksArray = [];
 
 function artistGet() {
     let arr = newArtistsArray[0]
+    $('.resultsDiv').empty();
     for (i=0; i < arr.length; i++) {
         let newArtists = arr[i].name
         let artistList = 
@@ -56,6 +57,7 @@ function artistGet() {
 
 function songGet() {
     let songArr = newTracksArray[0];
+    $('.resultsDiv').empty();
     console.log(songArr)
     for (i=0; i < songArr.length; i++) {
         let newSongs = songArr[i].name
@@ -63,7 +65,31 @@ function songGet() {
         let songList = 
         `<button class="artistButton" data-toggle="modal" data-target="#artistModal" data-id="${newSongs}">${newSongs}</button>`
         $('.resultsDiv').append(songList);
-    }}
+    }
+    $('.artistButton').on('click', (e) => {
+        e.preventDefault();
+        let songName = e.target.getAttribute('data-id');
+        for (i=0; i < songArr.length; i++) {
+            if (songName == songArr[i].name) {
+                let songModel = {
+                    trackId: songArr[i].id,
+                    artist: songArr[i].artists[0].name,
+                    song: songName,
+                    album: songArr[i].album.name,
+                    popularity: songArr[i].popularity,
+                    trackUrl: songArr[i].external_urls.spotify,
+                    userId: user._id
+                }
+                let modalPopulate = 
+                    `<a href="${songModel.trackUrl}">${songName}</a>`
+                $('#artistModalBody').empty()
+                $('#artistModalHeader').empty()
+                $('#artistModalBody').append(`<p>Info: ${songModel.artist}</br> ${songModel.album}</p>`)
+                $('#artistModalHeader').append(modalPopulate)
+            }
+        }
+    })    
+}
 
 // function addArtistSuccess () {
 //     console.log()
@@ -106,7 +132,7 @@ let songSuccess = (res) => {
     let artistId = res.artists.items[0].id;
     $('.resultsDiv').css('display', 'inline')
     $('#search').css('display', 'block')
-    
+
     // ajax request for recommended tracks
     $.ajax({
         method: 'GET',
@@ -115,6 +141,7 @@ let songSuccess = (res) => {
             'Authorization': 'Bearer ' + accessToken
         }, 
         success: recommend = (res) => {
+            newTracksArray = []
             newTracksArray.push(res.tracks)
         }
     }).then(songGet)

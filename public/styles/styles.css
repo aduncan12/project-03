@@ -78,13 +78,15 @@ body {
 
 .artistButton {
     color: #DDDDDD;
+    font-style: italic;
 }
+
 
 #artistModalHeader {
     margin: auto;
 }
 
-#signUp:hover, #logInButton:hover, #profile, #logOut, #mainSearch, #artistButton {
+#signUp:hover, #logInButton:hover, #profile, #logOut, #mainSearch, .artistButton {
     cursor: pointer;
 }
 
@@ -137,7 +139,7 @@ h1 {
     margin: auto 7%;
 }
 
-.fas:hover {
+.fas:hover, .artistButton:hover {
     cursor: pointer;
 }
 

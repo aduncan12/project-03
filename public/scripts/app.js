@@ -1,4 +1,4 @@
-let accessToken = 'BQBaiEvxwRSW8ZCzEMzL4x_An7ZxsSUDbmDMCzaDZCezYlbc8JHl4G9ox-0LuDgMICTVFyxCgpkE3tRmkNEJZxjzAFxCuTcxC7Jn3vxrbuePBzSo4C0bUv8_RWFVrjpjVlOwgk4a3sDC1EFp8OcBrtJEjF36ZM1nQsTr7A&refresh_token=AQB4eVCzbdzUdr0ufjJg4SAhXkn_q7MRoTUCLbHjbsZ_14prf5AT6dS-i9IM4cgPXiOQLQOHQE9z9zSRMJA091F23Jxf1krqWNUwh8tJG1qW8bV2FEMNkXRzpg0vCdZvKpLggg';
+let accessToken = 'BQADWuTPJ8VWrfQldZx5nVs4KHtpQfwUZKcyIDn7TaI1hrt4ogCq8L-6aOgeqN94jCfXR8Ttmyn4Lu1UOQB0de4DZJfGuDhY6QNn1MVrOqYonpkrfjgAOfMTCJ-uqcqS1ik_Ony8_oIwdSEUw56kez74PvRPFriyv1jO7Q&refresh_token=AQAZp81i-ZV5EPnba_6uqUZGWFs9Be1kSkW2sjqdH2PpaNvDW_sLGqGx-U881fPvSk6PPPMtDRBtzUEsZrTPrT94bDYgOKWo4Tg3eRPtYa4SAPjDL3riBCruGzsZW1n64DXgbw';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
@@ -56,32 +56,34 @@ function artistGet() {
 }
 
 function songGet() {
-    let songArr = newTracksArray[0];
+    let trackArr = newTracksArray[0];
     $('.resultsDiv').empty();
-    console.log(songArr)
-    for (i=0; i < songArr.length; i++) {
-        let newSongs = songArr[i].name
-        console.log(newSongs)
-        let songList = 
-        `<button class="artistButton" data-toggle="modal" data-target="#artistModal" data-id="${newSongs}">${newSongs}</button>`
-        $('.resultsDiv').append(songList);
+    console.log(trackArr)
+    for (i=0; i < trackArr.length; i++) {
+        let newTracks = trackArr[i].name
+        let trackArtist = trackArr[i].artists[0].name
+        console.log(newTracks)
+        let trackList = 
+        `<button class="artistButton" data-toggle="modal" data-target="#artistModal" data-id="${newTracks}">${newTracks}</button>by 
+        <p> ${trackArtist}</p>`
+        $('.resultsDiv').append(trackList);
     }
     $('.artistButton').on('click', (e) => {
         e.preventDefault();
-        let songName = e.target.getAttribute('data-id');
-        for (i=0; i < songArr.length; i++) {
-            if (songName == songArr[i].name) {
+        let trackName = e.target.getAttribute('data-id');
+        for (i=0; i < trackArr.length; i++) {
+            if (trackName == trackArr[i].name) {
                 let songModel = {
-                    trackId: songArr[i].id,
-                    artist: songArr[i].artists[0].name,
-                    song: songName,
-                    album: songArr[i].album.name,
-                    popularity: songArr[i].popularity,
-                    trackUrl: songArr[i].external_urls.spotify,
+                    trackId: trackArr[i].id,
+                    artist: trackArr[i].artists[0].name,
+                    song: trackName,
+                    album: trackArr[i].album.name,
+                    popularity: trackArr[i].popularity,
+                    trackUrl: trackArr[i].external_urls.spotify,
                     userId: user._id
                 }
                 let modalPopulate = 
-                    `<a href="${songModel.trackUrl}">${songName}</a>`
+                    `<a href="${songModel.trackUrl}">${trackName}</a>`
                 $('#artistModalBody').empty()
                 $('#artistModalHeader').empty()
                 $('#artistModalBody').append(`<p>Info: ${songModel.artist}</br> ${songModel.album}</p>`)
@@ -136,7 +138,7 @@ let songSuccess = (res) => {
     // ajax request for recommended tracks
     $.ajax({
         method: 'GET',
-        url: `https://api.spotify.com/v1/recommendations?seed_artists=${artistId}`,
+        url: `https://api.spotify.com/v1/recommendations?seed_artists=${artistId}&max_popularity=60`,
         headers: {
             'Authorization': 'Bearer ' + accessToken
         }, 

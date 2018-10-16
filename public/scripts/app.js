@@ -1,10 +1,10 @@
-let accessToken = 'BQDKu9qQTJEf2Fp2e29-RMHjp5hh_9pvrjroRJsh5nmMCmqXGDyvvV1yRnAQqlNU1X4bkROHwQIZIQTUZZB5jna27Wjng62m3Gk1mVngQ1bcLBLauO0js3NT-UI-31uZXVfgR-iyjfdVRmlatuyxbMLuMjNlY3kaBP17xQ&refresh_token=AQDXKI9i7V32odwP6i9ZI9BQ-_94p5bjcTjxF5xoZ1RbNv67HMwLLl-MeHlXkQq-Y95veVoS3VHo04mX1FMLMHLQAWHxvNzMhlndJ_vXxzE45hjAijViERZKrq8_oUXH13ECFQ';
+let accessToken = 'BQBaiEvxwRSW8ZCzEMzL4x_An7ZxsSUDbmDMCzaDZCezYlbc8JHl4G9ox-0LuDgMICTVFyxCgpkE3tRmkNEJZxjzAFxCuTcxC7Jn3vxrbuePBzSo4C0bUv8_RWFVrjpjVlOwgk4a3sDC1EFp8OcBrtJEjF36ZM1nQsTr7A&refresh_token=AQB4eVCzbdzUdr0ufjJg4SAhXkn_q7MRoTUCLbHjbsZ_14prf5AT6dS-i9IM4cgPXiOQLQOHQE9z9zSRMJA091F23Jxf1krqWNUwh8tJG1qW8bV2FEMNkXRzpg0vCdZvKpLggg';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
 
 let newArtistsArray = [];
-
+let newTracksArray = [];
 
 function artistGet() {
     let arr = newArtistsArray[0]
@@ -54,6 +54,17 @@ function artistGet() {
     })
 }
 
+function songGet() {
+    let songArr = newTracksArray[0];
+    console.log(songArr)
+    for (i=0; i < songArr.length; i++) {
+        let newSongs = songArr[i].name
+        console.log(newSongs)
+        let songList = 
+        `<button class="artistButton" data-toggle="modal" data-target="#artistModal" data-id="${newSongs}">${newSongs}</button>`
+        $('.resultsDiv').append(songList);
+    }}
+
 // function addArtistSuccess () {
 //     console.log()
 //     let addArtist = 
@@ -88,35 +99,28 @@ let artistSuccess = (res) => {
             newArtistsArray = []
             newArtistsArray.push(res.artists)
         }
-        
     }).then(artistGet)
-
-    // ajax request for recommended tracks
-    // $.ajax({
-    //     method: 'GET',
-    //     url: `https://api.spotify.com/v1/recommendations?seed_artists=${artistId}`,
-    //     headers: {
-    //         'Authorization': 'Bearer ' + accessToken
-    //     }, 
-    //     success: recommend = (res) => {
-    //         console.log(res.tracks)
-    //         let i;
-    //         for (i=0; i < res.tracks.length; i++) {
-    //             let recommendations = res.tracks[i].artists[0].name
-    //             let artistList = 
-    //             `<li>
-    //             <p> ${recommendations} </p>
-    //             </li>`
-
-    //             $('.resultsDiv').append(artistList);
-    //         }    
-    //     }
-    // })
 }
 
+let songSuccess = (res) => {
+    let artistId = res.artists.items[0].id;
+    $('.resultsDiv').css('display', 'inline')
+    $('#search').css('display', 'block')
+    
+    // ajax request for recommended tracks
+    $.ajax({
+        method: 'GET',
+        url: `https://api.spotify.com/v1/recommendations?seed_artists=${artistId}`,
+        headers: {
+            'Authorization': 'Bearer ' + accessToken
+        }, 
+        success: recommend = (res) => {
+            newTracksArray.push(res.tracks)
+        }
+    }).then(songGet)
+}
 
-
-$('.fas').on('click', (e) => {
+$('#artistSearchIcon').on('click', (e) => {
     e.preventDefault();
     $('.resultsDiv').empty();
     let artist = $('#artistSearch').val();
@@ -127,6 +131,21 @@ $('.fas').on('click', (e) => {
             'Authorization': 'Bearer ' + accessToken
         }, 
         success: artistSuccess,
+        // error: console.log('error')
+    });
+})
+
+$('#songSearchIcon').on('click', (e) => {
+    e.preventDefault();
+    $('.resultsDiv').empty();
+    let artist = $('#songSearch').val();
+    $.ajax({
+        method: 'GET',
+        url: `https://api.spotify.com/v1/search/?q="${artist}"&type=artist`,
+        headers: {
+            'Authorization': 'Bearer ' + accessToken
+        }, 
+        success: songSuccess,
         // error: console.log('error')
     });
 })

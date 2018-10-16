@@ -107,7 +107,7 @@ main {
     width: 100vw;
 }
 
-#search {
+.search {
     display: inline-flex;
     justify-content: space-between;
     width: 31vw;
@@ -126,10 +126,10 @@ h1 {
     margin: 15% 0;
 }
 
-#bandSearch {
+#songSearch, #artistSearch {
     /* border: 1px solid; */
     padding: 0 2%;
-    border-radius: 10px;
+    font-size: .9rem
 }
 
 .fas {

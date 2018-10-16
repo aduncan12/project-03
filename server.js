@@ -45,11 +45,12 @@ app.get('/api', (req, res) => {
             {method: "GET", path: "/api/users", description: "View all users"}, 
             {method: "GET", path: "/api/songs", description: "View all songs"}, 
             {method: "GET", path: "/api/artists", description: "View all artists"}, 
-            {method: "GET", path: "/api/user/:id", description: "View all users by id"}, 
+            {method: "GET", path: "/api/user/:id", description: "View user by id"}, 
             {method: "GET", path: "/api/comments", description: "View all comments"},
             {method: "POST", path: "/api/signup", description: "Sign up users"},
             {method: "POST", path: "/api/login", description: "User log in"},
-            {method: "POST", path: "/api/addartist", description: "Add Artist Info"}
+            {method: "POST", path: "/api/addartist", description: "Add Artist Info"},
+            {method: "DELETE", path: "/api/artists", description: "Remove artist from database"}
         ]
     })
 });
@@ -170,6 +171,14 @@ app.post('/api/addartist', (req, res) => {
             
         })
 })
+
+// app.delete('/api/artist', (req, res) => {
+//     let id = req.body._id
+//     let artist = req.body.name
+//     let user = req.body.user
+//     console.log(id)
+//     db.Artist.deleteOne()
+// })
 
 app.get('/api/users', (req, res) => {
     db.User.find( {}, (err, usersAll) => {

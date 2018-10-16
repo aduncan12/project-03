@@ -1,9 +1,10 @@
-let accessToken = 'BQB-BJQwRgCZVWDNQ0Lk_8g2g1FdxUI3rKLqXj9a1UhpUg9Mmq7jI3teIXHy2QtJfapz9RyDW0pVhPIR7wfrDduCuZhhocvPWMupwgx3YniiFzJCHuMXmiFNiS5xGk1h-APBMHSBU03iYdM4NQ5dsIThLdUqcjCbKm6W-g&refresh_token=AQBrcdfpTzLbL37K4Cq1teAe-OiDaA9AG8bBoRbvDaSM5VOSMCpklLWZgvTT1OhIjqSJftoQKxEec_rakT5bvYOfcNYtG4juBNQZ4mC46sVQ3MPgAjeFEcIRwnQ7PL9kVXUT_A';
+let accessToken = 'BQDKu9qQTJEf2Fp2e29-RMHjp5hh_9pvrjroRJsh5nmMCmqXGDyvvV1yRnAQqlNU1X4bkROHwQIZIQTUZZB5jna27Wjng62m3Gk1mVngQ1bcLBLauO0js3NT-UI-31uZXVfgR-iyjfdVRmlatuyxbMLuMjNlY3kaBP17xQ&refresh_token=AQDXKI9i7V32odwP6i9ZI9BQ-_94p5bjcTjxF5xoZ1RbNv67HMwLLl-MeHlXkQq-Y95veVoS3VHo04mX1FMLMHLQAWHxvNzMhlndJ_vXxzE45hjAijViERZKrq8_oUXH13ECFQ';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
 
 let newArtistsArray = [];
+
 
 function artistGet() {
     let arr = newArtistsArray[0]
@@ -16,8 +17,6 @@ function artistGet() {
     $('.artistButton').on('click', (e) => {
         e.preventDefault();
         let artistName = e.target.getAttribute('data-id');
-        console.log(artistName)
-        console.log(arr)
         for (i=0; i < arr.length; i++) {
             if (artistName == arr[i].name) {
                 let artistModel = {
@@ -40,28 +39,27 @@ function artistGet() {
                 
                 $('#artistAdd').on('click', (e) => {
                     e.preventDefault();
-                        let addArtist = 
-                        `<li><a href="${artistModel.artistUrl}">${artistModel.name}</a></li>`
-                        $('#savedArtists').append(addArtist)
+
                     
                     $.ajax({
                         method: 'POST',
                         url:'/api/addartist',
                         data: artistModel,
-                        success: console.log(artistModel.name),
-                    }).done(function(res) {
-                        console.log(res)
-                    } )
+                        // add success function that populates artist list
+                        success: console.log(`${artistModel.name} added to db`)
+                    })
                 })
-                
-            }
-
+            } 
         }
     })
 }
 
-
-
+// function addArtistSuccess () {
+//     console.log()
+//     let addArtist = 
+//     `<li><a href="${artistModel.artistUrl}">${artistModel.name}</a></li>`
+//     $('#savedArtists').append(addArtist)
+// }
 
 let artistSuccess = (res) => {
 // create if statement to match artist variable with res.artists.items
@@ -231,7 +229,7 @@ function checkForLogin() {
             console.log(response)
             user = { username: response.username, _id: response._id }
             console.log("you can access variable user: " , user)
-            $('#message').text(`Welcome, ${ response.username || response.result.username } `)
+            $('#message').text(`Welcome, ${ response.username || response.newUser.username } `)
 
         }).fail(function (e1, e2, e3) {
         console.log(e2);

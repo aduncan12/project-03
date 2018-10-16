@@ -18,7 +18,7 @@
     <nav id="mainNav">
         <div id="navUser">
             <img id="logo" src="/images/records.jpeg" width="40" height="40" class="d-inline-block align-top" alt="">
-            <h3 id="message">Test</h3>
+            <h3 id="message"></h3>
         </div>
         <div id="navButtons">
             <button id="profile">Profile</button>
@@ -27,7 +27,7 @@
     </nav>
 
 <main id="mainMain">
-<!-- artist modal -->
+<!-- artist and song modal -->
     <div class="modal fade" id="artistModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -42,7 +42,10 @@
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-primary" id="artistAdd">Add Artist</button>
+            <button type="button" class="btn btn-primary" id="songAdd">Add Song</button>
             <button type="button" class="btn btn-primary" id="artistRemove">Remove Artist</button>
+            <button type="button" class="btn btn-primary" id="songRemove">Remove Song</button>
+
             </div>
         </div>
         </div>
@@ -56,19 +59,20 @@
 
     <div id="searchDiv">
         <h1>P R 0 J 3 C T</h1>
+        <h5>Enter an Artist Name:</h5>
         <div id="searchArtist" class="search">
-            <input id="artistSearch" type="search" placeholder="Search for Similar Artists" name="search">
+            <input id="artistSearch" type="search" placeholder="Similar Artists" name="search">
             <i id="artistSearchIcon" class="fas fa-search"></i>
         </div>
         <div id="searchSong" class="search">
-            <input id="songSearch" type="search" placeholder="Search for Similar Songs" name="search">
+            <input id="songSearch" type="search" placeholder="Similar Songs" name="search">
             <i id="songSearchIcon" class="fas fa-search"></i>
         </div>
         <div class="resultsDiv"></div>
     </div>
 
     <div class="savedDiv">
-        <div id="savedSongs">
+        <div id="songsDiv">
             Songs
         </div>
     </div>

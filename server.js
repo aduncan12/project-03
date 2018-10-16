@@ -46,10 +46,12 @@ app.get('/api', (req, res) => {
             {method: "GET", path: "/api/songs", description: "View all songs"}, 
             {method: "GET", path: "/api/artists", description: "View all artists"}, 
             {method: "GET", path: "/api/user/:id", description: "View user by id"}, 
+            {method: "GET", path: "/api/artist/:name", description: "View artist by name"}, 
             {method: "GET", path: "/api/comments", description: "View all comments"},
             {method: "POST", path: "/api/signup", description: "Sign up users"},
             {method: "POST", path: "/api/login", description: "User log in"},
             {method: "POST", path: "/api/addartist", description: "Add Artist Info"},
+            {method: "POST", path: "/api/addsong", description: "Add Song Info"},
             {method: "DELETE", path: "/api/artists", description: "Remove artist from database"}
         ]
     })
@@ -180,6 +182,41 @@ app.post('/api/addartist', (req, res) => {
 //     db.Artist.deleteOne()
 // })
 
+app.post('/api/addsong', (req, res) => {
+    let trackAdded = req.body
+    console.log(trackAdded)
+
+    db.Song.find({trackId: trackAdded.trackId})
+        .exec()
+        .then( songs => {
+            if(songs.length >= 1) {
+                return res.status(409).json({
+                    message: "song already exists"
+                })
+            } else {
+                db.Song.create({
+                    trackId: trackAdded.trackId,
+                    artist: trackAdded.artist,
+                    song: trackAdded.song,
+                    album: trackAdded.album,
+                    popularity: trackAdded.popularity,
+                    trackUrl: trackAdded.trackUrl,
+                    user: trackAdded.userId,        
+                    }, 
+                    (err, savedTrack) => {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            console.log(savedTrack);
+                        }
+                })
+            }
+            
+        })
+})
+
+
+
 app.get('/api/users', (req, res) => {
     db.User.find( {}, (err, usersAll) => {
         if(err){console.log(err)};
@@ -201,6 +238,17 @@ app.get('/api/artists', (req, res) => {
     db.Artist.find( {}, (err, artistsAll) => {
         if(err){console.log(err)};
         res.json({artistsAll});
+    });
+});
+
+app.get('/api/artist/:name', (req, res) => {
+    let artistId = req.params.name;
+    console.log(artistId)
+    db.Artist.findById( artistId )
+        // .populate('username')
+        .exec( (err, foundArtist) => {
+        if(err){ return res.status(400).json({err: "error has occured"})} 
+        res.json(foundArtist);
     });
 });
 

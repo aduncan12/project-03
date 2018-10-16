@@ -128,6 +128,11 @@ h1 {
     margin: 10% 0;
 }
 
+h5 {
+    color: #DDDDDD;
+
+}
+
 #songSearch, #artistSearch {
     /* border: 1px solid; */
     padding: 0 2%;
@@ -168,17 +173,19 @@ h1 {
     justify-content: center;
 }
 
-#artistsDiv {
+#artistsDiv, #songsDiv {
     width: 100%;
+
 }
 
 #savedArtists {
     list-style-type: none;
     margin: auto;
     padding-left: 0;
+    
 }
 
-#savedSongs * a, #savedArtists * a {
+#songsDiv * a, #savedArtists * a {
     padding: 2%;
     background-color: #DDDDDD;
     display: flex;
@@ -186,6 +193,8 @@ h1 {
     color: #000000;
     text-decoration: none;
     font-size: 1rem;
+    font-weight: bold;
+
 }
 
 footer {

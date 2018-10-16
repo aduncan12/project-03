@@ -1,4 +1,4 @@
-let accessToken = 'BQADWuTPJ8VWrfQldZx5nVs4KHtpQfwUZKcyIDn7TaI1hrt4ogCq8L-6aOgeqN94jCfXR8Ttmyn4Lu1UOQB0de4DZJfGuDhY6QNn1MVrOqYonpkrfjgAOfMTCJ-uqcqS1ik_Ony8_oIwdSEUw56kez74PvRPFriyv1jO7Q&refresh_token=AQAZp81i-ZV5EPnba_6uqUZGWFs9Be1kSkW2sjqdH2PpaNvDW_sLGqGx-U881fPvSk6PPPMtDRBtzUEsZrTPrT94bDYgOKWo4Tg3eRPtYa4SAPjDL3riBCruGzsZW1n64DXgbw';
+let accessToken = 'BQDUm3ufloccRachhOYhhonSn0cKwR6Hlk7gcg3RK-EgbyxwU9LRlpj2twaAuyn82uZdovofs_4I1R9P3-6ICGt9zQLDHIq7j8FgW8ohzkwvZZwZsQ_3UmWG0Q365mwNSz6D2aIFjy13rExfsPftfdlO2coKEe4jH18yFQ&refresh_token=AQBLcpOMRg4yo5pN_QB8xREjFpHHhIbfQBOPTvHUY071nGnEYwZ_RMeFvVCJa9Z_lW4HsuecOVqENEBNM-_v3faQLivKBRCR3HCneg-hPL4uddMavVIlai6qjjZixvN4mUxvMA';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
@@ -18,6 +18,7 @@ function artistGet() {
     $('.artistButton').on('click', (e) => {
         e.preventDefault();
         let artistName = e.target.getAttribute('data-id');
+
         for (i=0; i < arr.length; i++) {
             if (artistName == arr[i].name) {
                 let artistModel = {
@@ -29,7 +30,7 @@ function artistGet() {
                     artistUrl: arr[i].external_urls.spotify,
                     userId: user._id
                 }
-                // console.log(artistModel)
+
                 let modalPopulate = 
                     `<img src="${artistModel.image}" height="185" width="250">
                     <a href="${artistModel.artistUrl}">${artistModel.name}</a>`
@@ -40,7 +41,6 @@ function artistGet() {
                 
                 $('#artistAdd').on('click', (e) => {
                     e.preventDefault();
-
                     
                     $.ajax({
                         method: 'POST',
@@ -49,10 +49,21 @@ function artistGet() {
                         // add success function that populates artist list
                         success: console.log(`${artistModel.name} added to db`)
                     })
+                    
+
                 })
             } 
         }
     })
+}
+
+function addArtistSuccess (res) {
+    console.log(res)
+        // if (res._id === _id && res.user === user) {
+        //     let addArtist = 
+        //     `<li><a href="${res.artistUrl}">${res.name}</a></li>`
+        //     $('#savedArtists').append(addArtist)
+        // }      
 }
 
 function songGet() {
@@ -62,7 +73,6 @@ function songGet() {
     for (i=0; i < trackArr.length; i++) {
         let newTracks = trackArr[i].name
         let trackArtist = trackArr[i].artists[0].name
-        console.log(newTracks)
         let trackList = 
         `<button class="artistButton" data-toggle="modal" data-target="#artistModal" data-id="${newTracks}">${newTracks}</button>by 
         <p> ${trackArtist}</p>`
@@ -88,17 +98,33 @@ function songGet() {
                 $('#artistModalHeader').empty()
                 $('#artistModalBody').append(`<p>Info: ${songModel.artist}</br> ${songModel.album}</p>`)
                 $('#artistModalHeader').append(modalPopulate)
+
+                $('#songAdd').on('click', (e) => {
+                    e.preventDefault();
+                    
+                    $.ajax({
+                        method: 'POST',
+                        url:'/api/addsong',
+                        data: songModel,
+                        // add success function that populates artist list
+                        success: console.log(`${songModel.song} added to db`)
+                    })
+                })
+                $('#songRemove').on('click', (e) => {
+                    e.preventDefault();
+                    
+                    $.ajax({
+                        method: 'DELETE',
+                        url:'/api/songs',
+                        data: songModel,
+                        // add success function that populates artist list
+                        success: console.log(`${songModel.song} removed from db`)
+                    })
+                })
             }
         }
     })    
 }
-
-// function addArtistSuccess () {
-//     console.log()
-//     let addArtist = 
-//     `<li><a href="${artistModel.artistUrl}">${artistModel.name}</a></li>`
-//     $('#savedArtists').append(addArtist)
-// }
 
 let artistSuccess = (res) => {
 // create if statement to match artist variable with res.artists.items
@@ -152,6 +178,7 @@ let songSuccess = (res) => {
 $('#artistSearchIcon').on('click', (e) => {
     e.preventDefault();
     $('.resultsDiv').empty();
+    $('#songSearch').val('');
     let artist = $('#artistSearch').val();
     $.ajax({
         method: 'GET',
@@ -167,6 +194,7 @@ $('#artistSearchIcon').on('click', (e) => {
 $('#songSearchIcon').on('click', (e) => {
     e.preventDefault();
     $('.resultsDiv').empty();
+    $('#artistSearch').val('');
     let artist = $('#songSearch').val();
     $.ajax({
         method: 'GET',

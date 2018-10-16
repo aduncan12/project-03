@@ -4,10 +4,11 @@ const mongoose = require('mongoose'),
 
 const songSchema = new Schema({
     trackId: String,
-    artist: {
-        type: Schema.Types.ObjectId,
-        ref: 'Artist'
-    },
+    artist: String,
+    // artist: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Artist'
+    // },
     song: String,
     album: String,
     popularity: Number,

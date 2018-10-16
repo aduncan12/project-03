@@ -2,11 +2,16 @@ const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 const artistSchema = new Schema({
-    name: { type: String },
-    image: { type: String },
-    popularity: { type: Number },
-    genre: { type: String },
-    artistUrl: { type: String }
+    artistId: String,
+    name: String,
+    image: String,
+    popularity: Number,
+    genres: Array,
+    artistUrl: String,
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
 })
 
 const Artist = mongoose.model('Artist', artistSchema);

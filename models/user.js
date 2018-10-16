@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
-    Comments = require('./comments')
+
 
 
 const userSchema = new Schema({
@@ -20,8 +20,12 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    image: {
-        type: String
+
+    image: String,
+    
+    artist: {
+        type: Schema.Types.ObjectId,
+        ref: 'Artist'
     },
     comments: {
         type: Schema.Types.ObjectId,

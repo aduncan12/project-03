@@ -1,6 +1,5 @@
 const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
-    Artist = require('./artist')
 
 
 const songSchema = new Schema({

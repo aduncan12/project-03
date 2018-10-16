@@ -139,15 +139,37 @@ app.post('/api/login', (req, res) => {
         })
 })
 
-// app.post('/api/addartist', (req, res) => {
-//     db.Artist.find({name: req.body.name})
-//         .exec()
-//         .then( artist => {
-//             if (artist.length >= 1) {
-//                 return res.status(409).json({
-//                     message: "artist is already saved"
-//                 })
-//             } else {
+app.post('/api/addartist', (req, res) => {
+    let artistAdded = req.body
+// find way to save genres array
+    db.Artist.find({artistId: artistAdded.artistId})
+        .exec()
+        .then( artists => {
+            if(artists.length >= 1) {
+                return res.status(409).json({
+                    message: "artist already exists"
+                })
+            } else {
+                db.Artist.create({
+                    artistId: artistAdded.artistId,
+                    name: artistAdded.name,
+                    image: artistAdded.image,
+                    popularity: artistAdded.popularity,
+                    genres: artistAdded.genres,
+                    artistUrl: artistAdded.artistUrl,
+                    user: artistAdded.userId,        
+                    }, 
+                    (err, savedArtist) => {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            console.log(savedArtist);
+                        }
+                })
+            }
+            
+        })
+})
 
 app.get('/api/users', (req, res) => {
     db.User.find( {}, (err, usersAll) => {

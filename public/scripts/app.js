@@ -1,4 +1,4 @@
-let accessToken = 'BQB7GU4pTVhaIa0XTM-GYm5WxG5FSn3eqd1zIQV3NlBGRh5FYVcz055hHsFeCfOKjV-h_19XnW9X_XMQ1w7TFTrdoufwaWY9f2uLz2ZUIaaSmI4HWku0aT_mR91yN-Kwl2sM-K6wBXd0BjColp3CVEnYWC2GKrsXOK8ZoA&refresh_token=AQADFaGiOu_5erO08cbRR1rcEXrX8vgMPyAiDvjZVdtdALx8W6aN07DwyET5Wbc7uKjQ41qaKAcGVKHUGnMjkJ7gphulvnSDSsQW9ctyql8zfYs1Su_kqDSSbGeiMUFTUSRRvg';
+let accessToken = 'BQB-BJQwRgCZVWDNQ0Lk_8g2g1FdxUI3rKLqXj9a1UhpUg9Mmq7jI3teIXHy2QtJfapz9RyDW0pVhPIR7wfrDduCuZhhocvPWMupwgx3YniiFzJCHuMXmiFNiS5xGk1h-APBMHSBU03iYdM4NQ5dsIThLdUqcjCbKm6W-g&refresh_token=AQBrcdfpTzLbL37K4Cq1teAe-OiDaA9AG8bBoRbvDaSM5VOSMCpklLWZgvTT1OhIjqSJftoQKxEec_rakT5bvYOfcNYtG4juBNQZ4mC46sVQ3MPgAjeFEcIRwnQ7PL9kVXUT_A';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
@@ -9,10 +9,6 @@ function artistGet() {
     let arr = newArtistsArray[0]
     for (i=0; i < arr.length; i++) {
         let newArtists = arr[i].name
-        let popularity = arr[i].popularity
-        let genres = arr[i].genres
-        let url = arr[i].external_urls.spotify
-        let followers = arr[i].followers.total
         let artistList = 
         `<button class="artistButton" data-toggle="modal" data-target="#artistModal" data-id="${newArtists}">${newArtists}</button>`
         $('.resultsDiv').append(artistList);
@@ -21,24 +17,49 @@ function artistGet() {
         e.preventDefault();
         let artistName = e.target.getAttribute('data-id');
         console.log(artistName)
-        // console.log(arr)
+        console.log(arr)
         for (i=0; i < arr.length; i++) {
             if (artistName == arr[i].name) {
+                let artistModel = {
+                    artistId: arr[i].id,
+                    name: artistName,
+                    image: arr[i].images[0].url,
+                    popularity: arr[i].popularity,
+                    genres: arr[i].genres,
+                    artistUrl: arr[i].external_urls.spotify,
+                    userId: user._id
+                }
+                // console.log(artistModel)
                 let modalPopulate = 
-                `<img src="${arr[i].images[0].url}" height="185" width="250">
-                <a href="${arr[i].external_urls.spotify}">${arr[i].name}</a>`
+                    `<img src="${artistModel.image}" height="185" width="250">
+                    <a href="${artistModel.artistUrl}">${artistModel.name}</a>`
                 $('#artistModalBody').empty()
                 $('#artistModalHeader').empty()
-                $('#artistModalBody').append(`<p>Genre(s): ${arr[i].genres}</p>`)
+                $('#artistModalBody').append(`<p>Genre(s): ${artistModel.genres}</p>`)
                 $('#artistModalHeader').append(modalPopulate)
+                
+                $('#artistAdd').on('click', (e) => {
+                    e.preventDefault();
+                        let addArtist = 
+                        `<li><a href="${artistModel.artistUrl}">${artistModel.name}</a></li>`
+                        $('#savedArtists').append(addArtist)
+                    
+                    $.ajax({
+                        method: 'POST',
+                        url:'/api/addartist',
+                        data: artistModel,
+                        success: console.log(artistModel.name),
+                    }).done(function(res) {
+                        console.log(res)
+                    } )
+                })
+                
             }
-        }        
+
+        }
     })
-    $('#artistAdd').on('click', (e) => {
-        e.preventDefault();
-        console.log(newArtistsArray)
-    }) 
 }
+
 
 
 
@@ -210,7 +231,7 @@ function checkForLogin() {
             console.log(response)
             user = { username: response.username, _id: response._id }
             console.log("you can access variable user: " , user)
-                $('#message').text(`Welcome, ${ response.username || response.result.username } `)
+            $('#message').text(`Welcome, ${ response.username || response.result.username } `)
 
         }).fail(function (e1, e2, e3) {
         console.log(e2);

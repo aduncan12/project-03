@@ -1,7 +1,6 @@
 const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
-    User = require('./user')
-    Artist = require('./artist')
+
 
 
 const commentsSchema = new Schema({

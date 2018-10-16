@@ -46,7 +46,7 @@ app.get('/api', (req, res) => {
             {method: "GET", path: "/api/songs", description: "View all songs"}, 
             {method: "GET", path: "/api/artists", description: "View all artists"}, 
             {method: "GET", path: "/api/user/:id", description: "View user by id"}, 
-            {method: "GET", path: "/api/artist/:name", description: "View artist by name"}, 
+            {method: "GET", path: "/api/artist/:id", description: "View artist by name"}, 
             {method: "GET", path: "/api/comments", description: "View all comments"},
             {method: "POST", path: "/api/signup", description: "Sign up users"},
             {method: "POST", path: "/api/login", description: "User log in"},
@@ -167,6 +167,7 @@ app.post('/api/addartist', (req, res) => {
                             console.log(err);
                         } else {
                             console.log(savedArtist);
+                            return res.json({data: savedArtist})
                         }
                 })
             }
@@ -225,7 +226,7 @@ app.get('/api/users', (req, res) => {
 });
 
 app.get('/api/user/:id', (req, res) => {
-    let userId = req.params.id;
+    let userId = req.params._id;
     db.User.findById( userId )
         // .populate('username')
         .exec( (err, foundUser) => {
@@ -241,13 +242,12 @@ app.get('/api/artists', (req, res) => {
     });
 });
 
-app.get('/api/artist/:name', (req, res) => {
-    let artistId = req.params.name;
-    console.log(artistId)
-    db.Artist.findById( artistId )
+app.get('/api/artist/:id', (req, res) => {
+    let id = req.params.id;
+    console.log(id)
+    db.Artist.findById( {_id: id} )
         // .populate('username')
-        .exec( (err, foundArtist) => {
-        if(err){ return res.status(400).json({err: "error has occured"})} 
+        .then( foundArtist => {
         res.json(foundArtist);
     });
 });

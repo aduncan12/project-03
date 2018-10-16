@@ -1,4 +1,4 @@
-let accessToken = 'BQDUm3ufloccRachhOYhhonSn0cKwR6Hlk7gcg3RK-EgbyxwU9LRlpj2twaAuyn82uZdovofs_4I1R9P3-6ICGt9zQLDHIq7j8FgW8ohzkwvZZwZsQ_3UmWG0Q365mwNSz6D2aIFjy13rExfsPftfdlO2coKEe4jH18yFQ&refresh_token=AQBLcpOMRg4yo5pN_QB8xREjFpHHhIbfQBOPTvHUY071nGnEYwZ_RMeFvVCJa9Z_lW4HsuecOVqENEBNM-_v3faQLivKBRCR3HCneg-hPL4uddMavVIlai6qjjZixvN4mUxvMA';
+let accessToken = 'BQAfpgVd7A5krpPyjqfSh_dxpizgJhq2fyaxD6YloT8LXMmizRxrby7nqsa42BT0EuvRel8xUCu-8JVbBbhQFEnX4HP_WBS-3HFuud2G26yJ0NNszKBi9ob8M26rXrwwuytIEmoyYDwR_8FTKm6ax7MXYtaDHm6eZI8vnw&refresh_token=AQBUf9qOD9A2pfyeyMmv_ordfiKXpJitFuY_6W4eP5LHs_Q6aZQlt7FSCNwgavGdcSx_qpgD9Xpi-_xEj0fJnfl9aPgyBOtvQiXH3dzAO-zfPSdMlhQgHVvAi9Qc-jiWnjFMtg';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
@@ -44,13 +44,13 @@ function artistGet() {
                     
                     $.ajax({
                         method: 'POST',
-                        url:'/api/addartist',
+                        url: '/api/addartist',
                         data: artistModel,
                         // add success function that populates artist list
-                        success: console.log(`${artistModel.name} added to db`)
+                        success: addArtistSuccess
+                        
                     })
                     
-
                 })
             } 
         }
@@ -59,11 +59,19 @@ function artistGet() {
 
 function addArtistSuccess (res) {
     console.log(res)
-        // if (res._id === _id && res.user === user) {
-        //     let addArtist = 
-        //     `<li><a href="${res.artistUrl}">${res.name}</a></li>`
-        //     $('#savedArtists').append(addArtist)
-        // }      
+        $.ajax({
+            method: 'GET',
+            url: '/api/artist/'+res.data._id,
+            success: populateArtistList,
+            error: console.log('oops')
+        })
+}
+
+function populateArtistList(res) {
+    console.log(res)
+    let addArtist = 
+    `<li><a href="${res.artistUrl}">${res.name}</a></li>`
+    $('#savedArtists').append(addArtist)
 }
 
 function songGet() {

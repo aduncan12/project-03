@@ -39,7 +39,7 @@ body {
     background-size: cover;  
 }
 
-#indexNav, #mainNav {
+#indexNav, #mainNav, #aboutNav {
     padding: 2%;
     background-color: #DDDDDD;
     /* opacity: .2; */
@@ -134,14 +134,17 @@ h1 {
     margin: 10% 0;
 }
 
-#welcome > h1 {
+#welcome > h1, #aboutDiv > h1 {
     color: #000000;
     margin: 5% 0;
 }
 
 h5 {
     color: #DDDDDD;
+}
 
+#aboutDiv > h5 {
+    color: #000000;
 }
 
 #songSearch, #artistSearch {
@@ -207,6 +210,20 @@ h5 {
 
 }
 
+#aboutDiv {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    height: 60%;
+    align-items: center;
+    background-color: #FFFFFF;
+    opacity: .6;
+    border-radius: 5px;
+    overflow-y: auto;
+    padding: 2%;
+}
+
 footer {
     padding: 1%;
     background-color: #DDDDDD;
@@ -237,4 +254,10 @@ a:hover {
 #message {
     align-self: flex-start;
     color: #000000;
+}
+
+@media screen and (max-width: 650px) {
+    #aboutDiv * p {
+        font-size: .75;
+    }
 }

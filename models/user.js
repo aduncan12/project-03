@@ -23,13 +23,13 @@ const userSchema = new Schema({
 
     image: String,
     
-    artist: {
+    artists: {
         type: Schema.Types.ObjectId,
         ref: 'Artist'
     },
-    comments: {
+    songs: {
         type: Schema.Types.ObjectId,
-        ref: 'Comments'
+        ref: 'Songs'
     }
 });
 

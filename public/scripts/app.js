@@ -309,11 +309,16 @@ function checkForLogin() {
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Authorization", 'Bearer ' + jwt);  
             }
-        }).done(function (response) {
-            console.log(response)
-            user = { username: response.username, _id: response._id }
+        }).done(function (res) {
+            console.log(res)
+            user = { username: res.username, _id: res._id }
             console.log("you can access variable user: " , user)
-            $('#message').text(`Welcome, ${ response.username || response.newUser.username } `)
+            $('#message').text(`Welcome, ${ res.username || res.newUser.username } `)
+            $.ajax({
+                method: 'GET',
+                url: '/api/artists',
+                success: loginPopulate
+            })
 
         }).fail(function (e1, e2, e3) {
         console.log(e2);
@@ -321,6 +326,21 @@ function checkForLogin() {
     } else {
         console.log('error: no local storage')
     }
+}
+
+function loginPopulate(res) {
+    let artistsAll = res.artistsAll
+    console.log(artistsAll[0])
+    for(i=0; i < artistsAll.length; i++) {
+        console.log(artistsAll[i])
+        if (user.id == artistsAll[i].user)
+        console.log(user.id)
+        // let addUserArtists = 
+        // `<li><a href="${artistsAll.artistUrl}">${artistsAll.name}</a></li>`
+        // $('#savedArtists').append(addUserArtists)
+    }
+
+
 }
 
 $('#about').on('click', (e) => {

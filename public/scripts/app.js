@@ -1,10 +1,11 @@
-let accessToken = 'BQAfpgVd7A5krpPyjqfSh_dxpizgJhq2fyaxD6YloT8LXMmizRxrby7nqsa42BT0EuvRel8xUCu-8JVbBbhQFEnX4HP_WBS-3HFuud2G26yJ0NNszKBi9ob8M26rXrwwuytIEmoyYDwR_8FTKm6ax7MXYtaDHm6eZI8vnw&refresh_token=AQBUf9qOD9A2pfyeyMmv_ordfiKXpJitFuY_6W4eP5LHs_Q6aZQlt7FSCNwgavGdcSx_qpgD9Xpi-_xEj0fJnfl9aPgyBOtvQiXH3dzAO-zfPSdMlhQgHVvAi9Qc-jiWnjFMtg';
+let accessToken = 'BQBX7p2Jz_7efJHH4PfwZdYLI0RM5rFKdXYDMfcoVUQfMIoXOc6uM_J6UPAw7yQYkytfXQwvDVHy6ZR38wO_Ob7IHugZwUtBdMrZXapczWAKxqpN4E0sbdHmQsTorgkcbQrLAqO5Can8b0X0I35Mz5uH9kYOtp6E84ho_A&refresh_token=AQDXTX-tkhoFoad7VFiv4JS2G9JwD9zAq_U0yJuThyXQoMSeeLux3n_BAURcjisfsnrmNEciHmxDcI5kRQo5orYAXIHkwbSQhZEfcjKXeZwo9-Ws-_B-jeSBLlTQJKexqfr2-g';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
 
 let newArtistsArray = [];
 let newTracksArray = [];
+
 
 function artistGet() {
     let arr = newArtistsArray[0]
@@ -312,12 +313,22 @@ function checkForLogin() {
         }).done(function (res) {
             console.log(res)
             user = { username: res.username, _id: res._id }
+            userId = res._id
             console.log("you can access variable user: " , user)
             $('#message').text(`Welcome, ${ res.username || res.newUser.username } `)
             $.ajax({
                 method: 'GET',
                 url: '/api/artists',
-                success: loginPopulate
+                success: function loginPopulate(res) {
+                    let artistsAll = res.artistsAll
+                    for(i=0; i < artistsAll.length; i++) {
+                        if (userId == artistsAll[i].user)
+                            console.log(artistsAll[i].name)
+                        let addUserArtists = 
+                        `<li><a href="${artistsAll[i].artistUrl}">${artistsAll[i].name}</a></li>`
+                        $('#savedArtists').append(addUserArtists)
+                    }
+                }
             })
 
         }).fail(function (e1, e2, e3) {
@@ -326,21 +337,6 @@ function checkForLogin() {
     } else {
         console.log('error: no local storage')
     }
-}
-
-function loginPopulate(res) {
-    let artistsAll = res.artistsAll
-    console.log(artistsAll[0])
-    for(i=0; i < artistsAll.length; i++) {
-        console.log(artistsAll[i])
-        if (user.id == artistsAll[i].user)
-        console.log(user.id)
-        // let addUserArtists = 
-        // `<li><a href="${artistsAll.artistUrl}">${artistsAll.name}</a></li>`
-        // $('#savedArtists').append(addUserArtists)
-    }
-
-
 }
 
 $('#about').on('click', (e) => {

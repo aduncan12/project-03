@@ -46,7 +46,8 @@ app.get('/api', (req, res) => {
             {method: "GET", path: "/api/songs", description: "View all songs"}, 
             {method: "GET", path: "/api/artists", description: "View all artists"}, 
             {method: "GET", path: "/api/user/:id", description: "View user by id"}, 
-            {method: "GET", path: "/api/artist/:id", description: "View artist by name"}, 
+            {method: "GET", path: "/api/artist/:id", description: "View artist by name"},
+            {method: "GET", path: "/api/song/:id", description: "View song by name"}, 
             {method: "GET", path: "/api/comments", description: "View all comments"},
             {method: "POST", path: "/api/signup", description: "Sign up users"},
             {method: "POST", path: "/api/login", description: "User log in"},
@@ -185,7 +186,7 @@ app.post('/api/addartist', (req, res) => {
 
 app.post('/api/addsong', (req, res) => {
     let trackAdded = req.body
-    console.log(trackAdded)
+    // console.log(trackAdded)
 
     db.Song.find({trackId: trackAdded.trackId})
         .exec()
@@ -256,6 +257,16 @@ app.get('/api/songs', (req, res) => {
     db.Song.find( {}, (err, songsAll) => {
         if(err){console.log(err)};
         res.json({songsAll});
+    });
+});
+
+app.get('/api/song/:id', (req, res) => {
+    let id = req.params.id;
+    console.log(id)
+    db.Song.findById( {_id: id} )
+        // .populate('username')
+        .then( foundSong => {
+        res.json(foundSong);
     });
 });
 

@@ -1,4 +1,4 @@
-let accessToken = 'BQBX7p2Jz_7efJHH4PfwZdYLI0RM5rFKdXYDMfcoVUQfMIoXOc6uM_J6UPAw7yQYkytfXQwvDVHy6ZR38wO_Ob7IHugZwUtBdMrZXapczWAKxqpN4E0sbdHmQsTorgkcbQrLAqO5Can8b0X0I35Mz5uH9kYOtp6E84ho_A&refresh_token=AQDXTX-tkhoFoad7VFiv4JS2G9JwD9zAq_U0yJuThyXQoMSeeLux3n_BAURcjisfsnrmNEciHmxDcI5kRQo5orYAXIHkwbSQhZEfcjKXeZwo9-Ws-_B-jeSBLlTQJKexqfr2-g';
+let accessToken = 'BQB6ZPlaCFmNEFaCp_EXhftmSELj5RLh6bjUjW2_7iGyo_r8dQ80ECiitWrKKWccqxb0hpV8kaus_0VLGcicB6h3vy9y6MrMr-QAAOLhfHuYHM3SwnHVJCk3Oz6k-p0I5f-bVZEx93ilfMS_6uKl04kaLtOvu-0yvGq6iw&refresh_token=AQD8XTquQqiDnxM6XppFG5z9co8aPF9TXS3HDb14PwRjnQrTXGuZmUfCX2LJjx_BI_CScqJFXcXQ8sJhUpP_kQlddvbwdlMexuUjnBPCmFQT-p7rONMxKj4pXXMkOhf3WE5GhA';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
@@ -47,7 +47,6 @@ function artistGet() {
                         method: 'POST',
                         url: '/api/addartist',
                         data: artistModel,
-                        // add success function that populates artist list
                         success: addArtistSuccess
                         
                     })
@@ -64,7 +63,7 @@ function addArtistSuccess (res) {
             method: 'GET',
             url: '/api/artist/'+res.data._id,
             success: populateArtistList,
-            error: console.log('oops')
+            error: ('oops')
         })
 }
 
@@ -115,24 +114,30 @@ function songGet() {
                         method: 'POST',
                         url:'/api/addsong',
                         data: songModel,
-                        // add success function that populates artist list
-                        success: console.log(`${songModel.song} added to db`)
-                    })
-                })
-                $('#songRemove').on('click', (e) => {
-                    e.preventDefault();
-                    
-                    $.ajax({
-                        method: 'DELETE',
-                        url:'/api/songs',
-                        data: songModel,
-                        // add success function that populates artist list
-                        success: console.log(`${songModel.song} removed from db`)
+                        success: addSongSuccess,
+                        error: (console.log(res.data))
                     })
                 })
             }
         }
     })    
+}
+
+function addSongSuccess (res) {
+    console.log(res.data)
+        $.ajax({
+            method: 'GET',
+            url: '/api/song/'+res.data._id,
+            success: populateSongList,
+            error: console.log('oops')
+        })
+}
+
+function populateSongList(res) {
+    console.log(res)
+    let addSong = 
+    `<li><a href="${res.trackUrl}">${res.song}</a> - ${res.artist}</li>`
+    $('#savedSongs').append(addSong)
 }
 
 let artistSuccess = (res) => {
@@ -322,11 +327,13 @@ function checkForLogin() {
                 success: function loginPopulate(res) {
                     let artistsAll = res.artistsAll
                     for(i=0; i < artistsAll.length; i++) {
-                        if (userId == artistsAll[i].user)
-                            console.log(artistsAll[i].name)
-                        let addUserArtists = 
-                        `<li><a href="${artistsAll[i].artistUrl}">${artistsAll[i].name}</a></li>`
-                        $('#savedArtists').append(addUserArtists)
+                        if (userId == artistsAll[i].user) {
+                            // let userArtists = artistsAll[i].name
+                            // console.log(userArtists)
+                            let addUserArtists = 
+                            `<li><a href="${artistsAll[i].artistUrl}">${artistsAll[i].name}</a></li>`
+                            $('#savedArtists').append(addUserArtists)
+                        }
                     }
                 }
             })

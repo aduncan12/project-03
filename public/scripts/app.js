@@ -1,5 +1,4 @@
 let accessToken = 'BQA9SA-E-_dnFc4U58klXBJH09iuNpDM2VbO386umE_TwHVNpLsXRuczzIdgfJChV12SCq6_pWly6p3PZN08cgtbzOTMd0-LjA2Qi7NiuBKy8ypx-X0tXjuxk0gW3ajqAThlZxt41puH4smHhK4kY4mkQCvLN1dNLYuZIw&refresh_token=AQBzRl9hiYTS5WMgsVj0OHCVZMR85butLV_J--ZutmT-LSMhqKaDtZYA8sqn_oEtW3rGr-1575444rLPJ66snP29NgSUXtnGELiOq8sni53j20xreWmHear1gVg-XRzjFMCeHA';
-localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
 
@@ -48,8 +47,7 @@ function artistGet() {
                         data: artistModel,
                         success: addArtistSuccess
                         
-                    })
-                    
+                    })                    
                 })
             } 
         }
@@ -240,6 +238,8 @@ $('#signUpSubmit').on('click', (e) => {
 signUpSuccess = (json) => {
     console.log(json);
     $('.modal-body .error-message').fadeOut(500);
+    $('.alert alert-success').fadeIn(500);
+
     localStorage.clear();
     localStorage.setItem('token', json.token)
     console.log(json.token)
@@ -247,27 +247,26 @@ signUpSuccess = (json) => {
         window.location.pathname = '/main';}, 500);
 }  
 
-
 signUpError = (json) => {
     $('#formSignUp input').each(function () {
     if ( $(this).val().length === 0) {
-        $('#duplicateMessage').fadeOut();
+        $('.alert alert-danger').fadeOut();
         $(this).siblings().fadeIn(1000);
         return;
     }
     if ( $(this).val().length !== 0) {
-        $('#duplicateMessage').fadeOut();
+        $('.alert alert-danger').fadeOut();
         $(this).siblings().fadeOut(200);
         return;
     }
 });
     if (json.status === 500){
-        $('#duplicateMessage').fadeOut();
+        $('.alert alert-danger').fadeOut();
         $('#emailValidation').fadeIn().text('Please enter a valid email address.');
     }
     if (json.status === 409){
-        $('#duplicateMessage').fadeOut();
-        $('#duplicateMessage').fadeIn();
+        $('.alert alert-danger').fadeOut();
+        $('.alert alert-danger').fadeIn();
     }
 };
 
@@ -291,6 +290,8 @@ $('#formLogin').on('submit', function (e) {
 loginSuccess = (json) => {
     console.log(json)
     $('main').first('.error-message').fadeOut();
+    $('.alert-success').fadeIn(500);
+
     localStorage.clear();
     localStorage.setItem('token', json.token)
     setTimeout(function () {

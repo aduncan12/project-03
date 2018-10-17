@@ -32,6 +32,7 @@ Planned Features
 * login with Spotify account
 * the ability for users to leave comments
 * advanced filtering options
+* error handling
 
 
 Current Issues to Fix

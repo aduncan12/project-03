@@ -20,5 +20,8 @@
     "passport-jwt": "^4.0.0",
     "querystring": "^0.2.0",
     "request": "^2.88.0"
+  },
+  "engines": {
+    "node": "10.10.0"
   }
 }

@@ -207,7 +207,10 @@ h5 {
     text-decoration: none;
     font-size: 1rem;
     font-weight: bold;
+}
 
+#songsDiv * a:hover, #savedArtists * a:hover {
+    font-size: 1.2rem;
 }
 
 #aboutDiv {
@@ -254,6 +257,20 @@ a:hover {
 #message {
     align-self: flex-start;
     color: #000000;
+}
+
+.error-message {
+    font-size: 1em;
+    color: #ff0000;
+    display: none;
+    background: linear-gradient(rgba(250, 250, 250, 0), rgba(250, 250, 250, 0.9), rgba(250, 250, 250, 0));
+    height: 5%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.alert {
+    display: none;
 }
 
 @media screen and (max-width: 650px) {

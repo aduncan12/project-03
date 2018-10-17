@@ -1,11 +1,10 @@
-let accessToken = 'BQB6ZPlaCFmNEFaCp_EXhftmSELj5RLh6bjUjW2_7iGyo_r8dQ80ECiitWrKKWccqxb0hpV8kaus_0VLGcicB6h3vy9y6MrMr-QAAOLhfHuYHM3SwnHVJCk3Oz6k-p0I5f-bVZEx93ilfMS_6uKl04kaLtOvu-0yvGq6iw&refresh_token=AQD8XTquQqiDnxM6XppFG5z9co8aPF9TXS3HDb14PwRjnQrTXGuZmUfCX2LJjx_BI_CScqJFXcXQ8sJhUpP_kQlddvbwdlMexuUjnBPCmFQT-p7rONMxKj4pXXMkOhf3WE5GhA';
+let accessToken = 'BQDyeLXKXIPvO9ySBCHyHz8LllyJjsd7X1yQSvGbNQfPCqyZmWAkeGW3DmMjYZXeNrqTHzsb3TakgCX-p-6N3NI977kgLXgeWN6kl-kBIkT0gJSnn4vNaUn8q58QIMb2gHfPZ23PRUmI3W-3Ww5TC8xZyboLCKgnDcDicg&refresh_token=AQCvPt_RMS52Q0ZfbiBWqblZ_gWEdBBx9IY34bFjh_b5qXB5H5b4t0psDL4GmDW0yyAQT5D5CYA4BwcGV8brVpm_kzRTe84PjtH2is9ElblN5953lFETEJPExOpcyRsWN9_egg';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
 
 let newArtistsArray = [];
 let newTracksArray = [];
-
 
 function artistGet() {
     let arr = newArtistsArray[0]
@@ -115,7 +114,7 @@ function songGet() {
                         url:'/api/addsong',
                         data: songModel,
                         success: addSongSuccess,
-                        error: (console.log(res.data))
+                        error: ('error')
                     })
                 })
             }
@@ -124,7 +123,7 @@ function songGet() {
 }
 
 function addSongSuccess (res) {
-    console.log(res.data)
+    console.log(res.data._id)
         $.ajax({
             method: 'GET',
             url: '/api/song/'+res.data._id,
@@ -294,6 +293,7 @@ loginSuccess = (json) => {
     $('main').first('.error-message').fadeOut();
     localStorage.clear();
     localStorage.setItem('token', json.token)
+    checkForLogin();
     setTimeout(function () {
         window.location.pathname = '/main';});
 }  
@@ -333,6 +333,22 @@ function checkForLogin() {
                             let addUserArtists = 
                             `<li><a href="${artistsAll[i].artistUrl}">${artistsAll[i].name}</a></li>`
                             $('#savedArtists').append(addUserArtists)
+                        }
+                    }
+                }
+            })
+            $.ajax({
+                method: 'GET',
+                url: '/api/songs',
+                success: function loginPopulateSong(res) {
+                    let songsAll = res.songsAll
+                    for(i=0; i < songsAll.length; i++) {
+                        if (userId == songsAll[i].user) {
+                            // let userArtists = artistsAll[i].name
+                            // console.log(userArtists)
+                            let addUserSongs = 
+                            `<li><a href="${songsAll[i].trackUrl}">${songsAll[i].song}</a>- ${songsAll[i].artist}</li>`
+                            $('#savedSongs').append(addUserSongs)
                         }
                     }
                 }

@@ -146,22 +146,32 @@ app.post('/api/login', (req, res) => {
 app.post('/api/addartist', (req, res) => {
     let artistAdded = req.body
 // find way to save genres array
-    db.Artist.create({
-        artistId: artistAdded.artistId,
-        name: artistAdded.name,
-        image: artistAdded.image,
-        popularity: artistAdded.popularity,
-        genres: artistAdded.genres,
-        artistUrl: artistAdded.artistUrl,
-        user: artistAdded.userId,        
-        }, 
-        (err, savedArtist) => {
-            if(err) {
-                console.log(err);
+    db.Artist.find({artistId: artistAdded.artistId})
+        .exec()
+        .then( artists => {
+            if(artists.length >= 1) {
+                return res.status(409).json({
+                    message: "artist already exists"
+                })
             } else {
-                console.log(savedArtist);
-                return res.json({data: savedArtist})
-            }
+                db.Artist.create({
+                    artistId: artistAdded.artistId,
+                    name: artistAdded.name,
+                    image: artistAdded.image,
+                    popularity: artistAdded.popularity,
+                    genres: artistAdded.genres,
+                    artistUrl: artistAdded.artistUrl,
+                    user: artistAdded.userId,        
+                    }, 
+                    (err, savedArtist) => {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            console.log(savedArtist);
+                            return res.json({data: savedArtist})
+                        }
+                    })
+                }
         })
 })
 
@@ -177,22 +187,32 @@ app.post('/api/addsong', (req, res) => {
     let trackAdded = req.body
     // console.log(trackAdded)
 
-    db.Song.create({
-        trackId: trackAdded.trackId,
-        artist: trackAdded.artist,
-        song: trackAdded.song,
-        album: trackAdded.album,
-        popularity: trackAdded.popularity,
-        trackUrl: trackAdded.trackUrl,
-        user: trackAdded.userId,        
-            }, 
-            (err, savedTrack) => {
-                if(err) {
-                    console.log(err);
-                } else {
-                    console.log(savedTrack);
-                    return res.json({data: savedTrack})
-                }
+    db.Song.find({trackId: trackAdded.trackId})
+    .exec()
+    .then( songs => {
+        if(songs.length >= 1) {
+            return res.status(409).json({
+                message: "song already exists"
+            })
+        } else {
+            db.Song.create({
+                trackId: trackAdded.trackId,
+                artist: trackAdded.artist,
+                song: trackAdded.song,
+                album: trackAdded.album,
+                popularity: trackAdded.popularity,
+                trackUrl: trackAdded.trackUrl,
+                user: trackAdded.userId,        
+                }, 
+                (err, savedTrack) => {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        console.log(savedTrack);
+                        return res.json({data: savedTrack})
+                    }
+                })
+            }            
     })
 })
 

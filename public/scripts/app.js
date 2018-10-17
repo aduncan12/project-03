@@ -1,4 +1,4 @@
-let accessToken = 'BQDyeLXKXIPvO9ySBCHyHz8LllyJjsd7X1yQSvGbNQfPCqyZmWAkeGW3DmMjYZXeNrqTHzsb3TakgCX-p-6N3NI977kgLXgeWN6kl-kBIkT0gJSnn4vNaUn8q58QIMb2gHfPZ23PRUmI3W-3Ww5TC8xZyboLCKgnDcDicg&refresh_token=AQCvPt_RMS52Q0ZfbiBWqblZ_gWEdBBx9IY34bFjh_b5qXB5H5b4t0psDL4GmDW0yyAQT5D5CYA4BwcGV8brVpm_kzRTe84PjtH2is9ElblN5953lFETEJPExOpcyRsWN9_egg';
+let accessToken = 'BQA9SA-E-_dnFc4U58klXBJH09iuNpDM2VbO386umE_TwHVNpLsXRuczzIdgfJChV12SCq6_pWly6p3PZN08cgtbzOTMd0-LjA2Qi7NiuBKy8ypx-X0tXjuxk0gW3ajqAThlZxt41puH4smHhK4kY4mkQCvLN1dNLYuZIw&refresh_token=AQBzRl9hiYTS5WMgsVj0OHCVZMR85butLV_J--ZutmT-LSMhqKaDtZYA8sqn_oEtW3rGr-1575444rLPJ66snP29NgSUXtnGELiOq8sni53j20xreWmHear1gVg-XRzjFMCeHA';
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 checkForLogin();
@@ -293,7 +293,6 @@ loginSuccess = (json) => {
     $('main').first('.error-message').fadeOut();
     localStorage.clear();
     localStorage.setItem('token', json.token)
-    checkForLogin();
     setTimeout(function () {
         window.location.pathname = '/main';});
 }  
@@ -324,12 +323,12 @@ function checkForLogin() {
             $.ajax({
                 method: 'GET',
                 url: '/api/artists',
-                success: function loginPopulate(res) {
+                success: loginPopulate = (res) => {
                     let artistsAll = res.artistsAll
                     for(i=0; i < artistsAll.length; i++) {
                         if (userId == artistsAll[i].user) {
                             // let userArtists = artistsAll[i].name
-                            // console.log(userArtists)
+                            // console.log(userArtists) 
                             let addUserArtists = 
                             `<li><a href="${artistsAll[i].artistUrl}">${artistsAll[i].name}</a></li>`
                             $('#savedArtists').append(addUserArtists)

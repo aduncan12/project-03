@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-    <title>Prjct3</title>
+    <title>Pyrrha</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <style type="text/css">
         #login, #loggedin {
@@ -19,7 +19,7 @@
 <body>
     <div class="container">
         <div id="login">
-            <h1>Project 3 Log In</h1>
+            <h1>P Y R R H A Log In</h1>
             <a href="/login" class="btn btn-primary">Log in with Spotify</a>
         </div>
         <div id="loggedin">
@@ -91,6 +91,7 @@
         } else {
             if (access_token) {
             // render oauth info
+            console.log(access_token)
             oauthPlaceholder.innerHTML = oauthTemplate({
                 access_token: access_token,
                 refresh_token: refresh_token

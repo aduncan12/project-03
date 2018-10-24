@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const app = express();
 const db = require('./models')
+const cors = require('cors')
+const request = require('request')
+const querystring = require('querystring')
 const config = require('./config/config')
 const passport = require('./config/passport')
 
@@ -13,6 +16,10 @@ const passport = require('./config/passport')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'))
+app.use(cors())
+
+
+let redirect_uri = 'http://localhost:8888/callback'
 
 //html endpoints
 //STILL NEED TO RESTRICT ACCESS WITH VERIFYTOKEN
@@ -49,6 +56,7 @@ app.get('/api', (req, res) => {
             {method: "GET", path: "/api/artist/:id", description: "View artist by name"},
             {method: "GET", path: "/api/song/:id", description: "View song by name"}, 
             {method: "GET", path: "/api/comments", description: "View all comments"},
+            {method: "GET", path: "/api/spotify", description: "Get spotify users"},
             {method: "POST", path: "/api/signup", description: "Sign up users"},
             {method: "POST", path: "/api/login", description: "User log in"},
             {method: "POST", path: "/api/addartist", description: "Add Artist Info"},
@@ -285,5 +293,38 @@ function verifyToken (req, res, next) {
         res.sendStatus(403);
     }
 }
+
+app.get('/spotify', function(req, res) {
+    res.redirect('https://accounts.spotify.com/authorize?' +
+        querystring.stringify({
+            response_type: 'code',
+            client_id: process.env.SPOTIFY_CLIENT_ID,
+            scope: 'user-read-private user-read-email',
+            redirect_uri
+        }))
+})
+
+app.get('/callback', function(req, res) {
+    let code = req.query.code || null
+    let authOptions = {
+        url: 'https://accounts.spotify.com/api/token',
+        form: {
+        code: code,
+        redirect_uri,
+        grant_type: 'authorization_code'
+        },
+        headers: {
+        'Authorization': 'Basic ' + (new Buffer(
+            process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET
+        ).toString('base64'))
+        },
+        json: true
+    }
+    request.post(authOptions, function(error, response, body) {
+        let access_token = body.access_token
+        let uri = process.env.FRONTEND_URI || 'http://localhost:8888/callback'
+        res.redirect(uri + '?access_token=' + access_token)
+    })
+})
 
 app.listen(process.env.PORT || 3000, () => console.log('Red 5 standing by at http://localhost:3000/'));

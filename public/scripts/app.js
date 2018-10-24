@@ -1,4 +1,8 @@
-let accessToken = 'BQBjq7swIyuclkMCrzzjTQgwTIHjvnBnZVWJolyf5EA5nl7UYPta1EYf_b7jGxYEQ0tRk7VwzXGevC5zmzpMFajJcZDmDszGIOKU2ierLEEkoWssYTlX9HsuAUtm38R4x-H6M0UdM0ER_XlF0DTQtTnKqjn3W1pGghdfyw&refresh_token=AQAHrYkiNXpfsDWv0d8RuHAox_h3aajULSM8jbc3zgZ_xmcpsLgdVtKvM0mdduZHvavGz_pLqSP286Vc2HRmD6FVqOGErSobDpuozE3JNYGWIFiSkDhSdbpF9__Bnn2vvUf-kg';
+accessToken = 'BQCvbGSjykEAzcflre70S8JdeWZ4qINj0FN8olGdEzgy6w7dOaNREaWXQOiKCHaaet7F9FaY3WpjXuFKqxZq3NBys2mgTfGBftNhXDp6mEZLsA13R3_faFa0X63neCO6XHVyaq2-cWZDOYIO0314RFP4PXhgg_iubCriuQ&refresh_token=AQAc4U0dvw0V5CD_sBhcY1bAW8ypyuTfBeiPuE4rer_oeoEP9v8RT-6CiSCjof87rnPNniKqdZjeA-sHlJoPcCh8RMvwtdmCMr2ASJrX1dxz82H9uv1uzC8vw3lctQISNQPfkw'
+
+
+spotifyRedirect = ('https://pyrrha.herokuapp.com/')
+
 
 checkForLogin();
 
@@ -286,6 +290,24 @@ $('#formLogin').on('submit', function (e) {
         error: loginError
     });
 })
+
+$('#spotifyLogin').on('click', function (e) {
+    e.preventDefault(); 
+    $.ajax({
+        method: 'GET',
+        url: `https://accounts.spotify.com/authorize?client_id=74893e3303c047d68148a47c4ef102bd&response_type=code&redirect_uri=${spotifyRedirect}&scope=user-read-private%20user-read-email`,
+        success: console.log('yes!'),
+        error: console.log('doh!')
+    });
+})
+
+// spotifySuccess = (json) => {
+//     console.log(json)
+//     localStorage.clear();
+//     localStorage.setItem('token', json.token)
+//     setTimeout(function () {
+//         window.location.pathname = '/main';});
+// }
 
 loginSuccess = (json) => {
     console.log(json)

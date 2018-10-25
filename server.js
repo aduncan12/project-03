@@ -26,7 +26,7 @@ let redirect_uri = 'http://localhost:8888/callback'
 app.get('/', (req, res) => 
     res.sendFile(__dirname + '/views/index.html'));
 
-app.get('/main', verifyToken, (req, res) => 
+app.get('/main', (req, res) => 
     res.sendFile(__dirname + '/views/main.html'));
 
 app.get('/profile', (req, res) => 

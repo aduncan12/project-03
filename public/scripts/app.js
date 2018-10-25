@@ -1,7 +1,7 @@
-accessToken = 'BQCvbGSjykEAzcflre70S8JdeWZ4qINj0FN8olGdEzgy6w7dOaNREaWXQOiKCHaaet7F9FaY3WpjXuFKqxZq3NBys2mgTfGBftNhXDp6mEZLsA13R3_faFa0X63neCO6XHVyaq2-cWZDOYIO0314RFP4PXhgg_iubCriuQ&refresh_token=AQAc4U0dvw0V5CD_sBhcY1bAW8ypyuTfBeiPuE4rer_oeoEP9v8RT-6CiSCjof87rnPNniKqdZjeA-sHlJoPcCh8RMvwtdmCMr2ASJrX1dxz82H9uv1uzC8vw3lctQISNQPfkw'
+accessToken = 'paste here'
 
 
-spotifyRedirect = ('https://pyrrha.herokuapp.com/')
+spotifyRedirect = ('http://localhost:8888/callback')
 
 
 checkForLogin();

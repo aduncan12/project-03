@@ -1,4 +1,4 @@
-accessToken = 'paste here'
+accessToken = 'BQCk7tfhsu4PCOpzNjx21WKd4VFjmyUVu_VTszjGwdxOK2OhESX_SNGve8l-u7aAdOXBbRAr4-uUtwwGaooZq0GsLTwtCQmZHl9LnKsFLqgRG4x3Qywm9ozzYfMnt3MivkjAM4z4V2-cfcORw-L4gwiyvb6iB-8P87LRig&refresh_token=AQC9iNw-9kISiSVgebjAnzqzPLCCFCmr_UxHr5pNNJ-eZO8uuH-udIh9h7HBDIWq01g8MwyX0BwG3h0x1L77ho6sOM0WgYmXbKD_Ve9iTweau0A-sT_eHITRexsh7YXfgqb_CQ'
 
 
 spotifyRedirect = ('http://localhost:8888/callback')

@@ -27,7 +27,8 @@ app.get('/', (req, res) =>
     res.sendFile(__dirname + '/views/index.html'));
 
 app.get('/main', verifyToken, (req, res) => 
-    res.sendFile(__dirname + '/views/main.html'));
+    res.sendFile(__dirname + '/views/main.html')
+    );
 
 app.get('/profile', (req, res) => 
     res.sendFile(__dirname + '/views/profile.html'));

@@ -314,7 +314,7 @@ loginSuccess = (json) => {
     $('main').first('.error-message').fadeOut();
     $('.alert-success').fadeIn(500);
 
-    localStorage.clear();
+    // localStorage.clear();
     localStorage.setItem('token', json.token)
     setTimeout(function () {
         window.location.pathname = '/main';});

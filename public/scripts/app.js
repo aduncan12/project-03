@@ -1,4 +1,5 @@
-accessToken = 'BQBINvV3RqpG8hKAf7xfJkRIrK2RH1dLjJtCz6EbYrIX4iv4Y2O-ZDoimQEaSmSC5am0XSAr5ZOBbxNeq0rQGc0ye4RVz4G-kcn1I34utAyPz2UdwVKwqVbeQG49B9TqFv57pFNOIEc-0PzStKBZNuCeYSMGC33QtD7R6w&refresh_token=AQAo3rgYm0EFCkRiUpOJmOQ37gRfcI_ZzzPTovozStkLuZmYIVF8XoO1cHdlTTVwk_SbRsIVcT3F4CiyBz1VSb0lfdXswPG7oy1yJdjo9FLYYCo41YcOKEqpwu-056Flz8WUlg'
+accessToken = 'BQAAJ_dmF2e0EwhhwP8_5zJZGMCupgktJF4Myfl-2RXDRyN3Sossu33ehwlKCdLJJfQUGAky3kWzJW9HsGnQf95JlV4zqY8qQ8z5k3oZ6G15Y9uu5aN6obt0TvMtkh7JxlMORlsKdD2wHQkK1Ljbiw0OmhNlXSWNAyVmNQ&refresh_token=AQCrPoGCbgmFdzUdE5IMnh6VnDYPqO9uVU5DwNX6NEdHA1_smZOp9tYxvdiPTg941tetQ9DuExQ_aikg2LcvkSCywVRuY2HSBcTo0d3MWWIrITo2DIb6IqRCqNG8cQqtQCIgOA'
+localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 
 spotifyRedirect = ('http://localhost:8888/callback')
@@ -314,7 +315,7 @@ loginSuccess = (json) => {
     $('main').first('.error-message').fadeOut();
     $('.alert-success').fadeIn(500);
 
-    // localStorage.clear();
+    localStorage.clear();
     localStorage.setItem('token', json.token)
     setTimeout(function () {
         window.location.pathname = '/main';});
@@ -335,7 +336,7 @@ function checkForLogin() {
             method: "POST", 
             url: '/verify',  
             beforeSend: function (xhr) {
-                xhr.setRequestHeader("Authorization", 'Bearer ' + jwt);  
+                xhr.setRequestHeader('Authorization', 'Bearer ' + jwt);  
             }
         }).done(function (res) {
             console.log(res)

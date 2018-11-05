@@ -26,9 +26,11 @@ let redirect_uri = 'http://localhost:8888/callback'
 app.get('/', (req, res) => 
     res.sendFile(__dirname + '/views/index.html'));
 
-app.get('/main', verifyToken, (req, res) => 
+app.get('/main', (req, res) => {
+    console.log('token: ' +req.token)
     res.sendFile(__dirname + '/views/main.html')
-    );
+    
+    });
 
 app.get('/profile', (req, res) => 
     res.sendFile(__dirname + '/views/profile.html'));
@@ -37,7 +39,9 @@ app.get('/about', (req, res) =>
     res.sendFile(__dirname + '/views/about.html'));
 
 app.post('/verify', verifyToken, (req, res) => {
-    let verified = jwt.verify(req.token, 'key')
+    console.log('req.token: ' + req.token)
+    let verified= jwt.verify(req.token, 'key')
+    console.log("verified: ", verified)
     res.json(verified)
 })
 
@@ -66,6 +70,27 @@ app.get('/api', (req, res) => {
         ]
     })
 });
+
+function verifyToken (req, res, next) {
+    console.log("in verify...");
+    const bearerHeader = req.headers.authorization;
+    if(typeof bearerHeader !== 'undefined'){
+        const bearer = bearerHeader.split(' ');
+        // console.log('Bearer ' + bearer)
+        // Get token from array
+        const bearerToken = bearer[1];
+        // console.log('Bearer Token ' + bearerToken)
+        // Set the token
+        req.token = bearerToken;
+        console.log('req.token ' + req.token)
+        // Next middleware
+        next();
+
+    } else {
+        // Forbidden
+        res.sendStatus(403);
+    }
+}
 
 app.post('/api/signup', (req, res) => {
     db.User.find({username: req.body.username})
@@ -275,26 +300,6 @@ app.get('/api/song/:id', (req, res) => {
         res.json(foundSong);
     });
 });
-
-function verifyToken (req, res, next) {
-    console.log("in verify...");
-    const bearerHeader = req.headers['authorization'];
-    if(typeof bearerHeader !== 'undefined'){
-        const bearer = bearerHeader.split(' ');
-        console.log(bearer)
-        // Get token from array
-        const bearerToken = bearer[1];
-        // Set the token
-        req.token = bearerToken;
-        console.log(req.token)
-        // Next middleware
-        next();
-
-    } else {
-        // Forbidden
-        res.sendStatus(403);
-    }
-}
 
 app.get('/spotify', function(req, res) {
     res.redirect('https://accounts.spotify.com/authorize?' +

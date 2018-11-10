@@ -1,8 +1,9 @@
-accessToken = 'BQAAJ_dmF2e0EwhhwP8_5zJZGMCupgktJF4Myfl-2RXDRyN3Sossu33ehwlKCdLJJfQUGAky3kWzJW9HsGnQf95JlV4zqY8qQ8z5k3oZ6G15Y9uu5aN6obt0TvMtkh7JxlMORlsKdD2wHQkK1Ljbiw0OmhNlXSWNAyVmNQ&refresh_token=AQCrPoGCbgmFdzUdE5IMnh6VnDYPqO9uVU5DwNX6NEdHA1_smZOp9tYxvdiPTg941tetQ9DuExQ_aikg2LcvkSCywVRuY2HSBcTo0d3MWWIrITo2DIb6IqRCqNG8cQqtQCIgOA'
+accessToken = 'BQCo6b5xXlne9Ea9BHLr7nqz7Unctm15dZvyFWVUDoVpoL19L85yP0IRAb1GBLor3L3UwDc85eWw6MyBc8WqPna80oRqEfpB3oN9urUN3G-Q71JS4scMBwjgY60oziJEfnj5s5d0XoGQldh4tMG8zGnS6EqFn37EFi9wCA&refresh_token=AQA3XHD2eb0NTh7YTCGNj1TRgT3tBdHiA08GjNko0Q5t5Oku7ojvjCfT--My2dk0mXrJaCcarpUXUYGcQju3oNmKvNb0eIjQTrp3fzTmhI_cRTum_Ny9T6nKm3TEIXDnz_-FIw'
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
 
 spotifyRedirect = ('http://localhost:8888/callback')
+
 
 
 checkForLogin();
@@ -296,9 +297,9 @@ $('#spotifyLogin').on('click', function (e) {
     e.preventDefault(); 
     $.ajax({
         method: 'GET',
-        url: `https://accounts.spotify.com/authorize?client_id=74893e3303c047d68148a47c4ef102bd&response_type=code&redirect_uri=${spotifyRedirect}&scope=user-read-private%20user-read-email`,
-        success: console.log('yes!'),
-        error: console.log('doh!')
+        url: `http://localhost:8888`,
+        success: loginSuccess,
+        error: console.log(localStorage)
     });
 })
 

@@ -7,8 +7,8 @@ const db = require('./models')
 const cors = require('cors')
 const request = require('request')
 const querystring = require('querystring')
-const config = require('./config/config')
-const passport = require('./config/passport')
+// const config = require('./config/config')
+// const passport = require('./config/passport')
 
 // const key = process.env.SECRET_KEY
 
@@ -17,9 +17,15 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'))
 app.use(cors())
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 
 let redirect_uri = 'http://localhost:8888/callback'
+
 
 //html endpoints
 //STILL NEED TO RESTRICT ACCESS WITH VERIFYTOKEN
@@ -70,6 +76,7 @@ app.get('/api', (req, res) => {
         ]
     })
 });
+
 
 function verifyToken (req, res, next) {
     console.log("in verify...");
@@ -301,11 +308,11 @@ app.get('/api/song/:id', (req, res) => {
     });
 });
 
-app.get('/spotify', function(req, res) {
+app.get('/spotify', function(req, res, next) {
     res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
-            client_id: process.env.SPOTIFY_CLIENT_ID,
+            client_id: '74893e3303c047d68148a47c4ef102bd',
             scope: 'user-read-private user-read-email',
             redirect_uri
         }))

@@ -75,7 +75,7 @@ body {
     width: 50%;
 }
 
-#signUp, #logInButton, #profile, #logOut, #mainSearch, .artistButton {
+#signUp, #logInButton, #profile, #logOut, #mainSearch, .artistButton, #spotifyLogin {
     margin: 0 2%;
     border: none;
     background-color: transparent;
@@ -92,7 +92,7 @@ body {
     margin: auto;
 }
 
-#signUp:hover, #logInButton:hover, #profile, #logOut, #mainSearch, .artistButton {
+#signUp:hover, #logInButton:hover, #spotifyLogin:hover, #profile, #logOut, #mainSearch, .artistButton {
     cursor: pointer;
 }
 

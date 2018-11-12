@@ -160,7 +160,7 @@ let artistSuccess = (res) => {
         method: 'GET',
         url: `https://api.spotify.com/v1/artists/${artistId}/related-artists`,
         headers: {
-            'Authorization': 'Bearer ' + tokensArray[1]
+            'Authorization': 'Bearer ' + tokensArray[0]
         }, 
         success: recommend = (res) => {
             newArtistsArray = []
@@ -179,7 +179,7 @@ let songSuccess = (res) => {
         method: 'GET',
         url: `https://api.spotify.com/v1/recommendations?seed_artists=${artistId}&max_popularity=60`,
         headers: {
-            'Authorization': 'Bearer ' + tokensArray[1]
+            'Authorization': 'Bearer ' + tokensArray[0]
         }, 
         success: recommend = (res) => {
             newTracksArray = []
@@ -195,6 +195,7 @@ $('#artistSearchIcon').on('click', (e) => {
         
     let urlHash = window.location.hash;
     tokensArray = urlHash.split('=');
+    tokensArray.shift()
     console.log(tokensArray)
 
     let artist = $('#artistSearch').val();
@@ -202,7 +203,7 @@ $('#artistSearchIcon').on('click', (e) => {
         method: 'GET',
         url: `https://api.spotify.com/v1/search/?q="${artist}"&type=artist`,
         headers: {
-            'Authorization': 'Bearer ' + tokensArray[1]
+            'Authorization': 'Bearer ' + tokensArray[0]
         }, 
         success: artistSuccess,
         // error: console.log('error')
@@ -218,7 +219,7 @@ $('#songSearchIcon').on('click', (e) => {
         method: 'GET',
         url: `https://api.spotify.com/v1/search/?q="${artist}"&type=artist`,
         headers: {
-            'Authorization': 'Bearer ' + tokensArray[1]
+            'Authorization': 'Bearer ' + tokensArray[0]
         }, 
         success: songSuccess,
         // error: console.log('error')

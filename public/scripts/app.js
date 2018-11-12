@@ -1,10 +1,6 @@
-accessToken = 'BQCo6b5xXlne9Ea9BHLr7nqz7Unctm15dZvyFWVUDoVpoL19L85yP0IRAb1GBLor3L3UwDc85eWw6MyBc8WqPna80oRqEfpB3oN9urUN3G-Q71JS4scMBwjgY60oziJEfnj5s5d0XoGQldh4tMG8zGnS6EqFn37EFi9wCA&refresh_token=AQA3XHD2eb0NTh7YTCGNj1TRgT3tBdHiA08GjNko0Q5t5Oku7ojvjCfT--My2dk0mXrJaCcarpUXUYGcQju3oNmKvNb0eIjQTrp3fzTmhI_cRTum_Ny9T6nKm3TEIXDnz_-FIw'
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
-
 spotifyRedirect = ('http://localhost:8888/callback')
-
-
 
 checkForLogin();
 
@@ -158,13 +154,13 @@ let artistSuccess = (res) => {
     //         let matches = res.artists.items[i].name
     //         console.log(matches)
     //     }
-    
+
     //ajax request for related artists
     $.ajax({
         method: 'GET',
         url: `https://api.spotify.com/v1/artists/${artistId}/related-artists`,
         headers: {
-            'Authorization': 'Bearer ' + accessToken
+            'Authorization': 'Bearer ' + tokensArray[1]
         }, 
         success: recommend = (res) => {
             newArtistsArray = []
@@ -183,7 +179,7 @@ let songSuccess = (res) => {
         method: 'GET',
         url: `https://api.spotify.com/v1/recommendations?seed_artists=${artistId}&max_popularity=60`,
         headers: {
-            'Authorization': 'Bearer ' + accessToken
+            'Authorization': 'Bearer ' + tokensArray[1]
         }, 
         success: recommend = (res) => {
             newTracksArray = []
@@ -196,12 +192,17 @@ $('#artistSearchIcon').on('click', (e) => {
     e.preventDefault();
     $('.resultsDiv').empty();
     $('#songSearch').val('');
+        
+    let urlHash = window.location.hash;
+    tokensArray = urlHash.split('=');
+    console.log(tokensArray)
+
     let artist = $('#artistSearch').val();
     $.ajax({
         method: 'GET',
         url: `https://api.spotify.com/v1/search/?q="${artist}"&type=artist`,
         headers: {
-            'Authorization': 'Bearer ' + accessToken
+            'Authorization': 'Bearer ' + tokensArray[1]
         }, 
         success: artistSuccess,
         // error: console.log('error')
@@ -217,7 +218,7 @@ $('#songSearchIcon').on('click', (e) => {
         method: 'GET',
         url: `https://api.spotify.com/v1/search/?q="${artist}"&type=artist`,
         headers: {
-            'Authorization': 'Bearer ' + accessToken
+            'Authorization': 'Bearer ' + tokensArray[1]
         }, 
         success: songSuccess,
         // error: console.log('error')
@@ -295,12 +296,9 @@ $('#formLogin').on('submit', function (e) {
 
 $('#spotifyLogin').on('click', function (e) {
     e.preventDefault(); 
-    $.ajax({
-        method: 'GET',
-        url: `http://localhost:8888`,
-        success: loginSuccess,
-        error: console.log(localStorage)
-    });
+    setTimeout(function() {
+        window.location.pathname = '/login';
+    })
 })
 
 // spotifySuccess = (json) => {

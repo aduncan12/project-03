@@ -2,7 +2,7 @@ localStorage.length > 0 ? console.log(localStorage) : console.log('no local stor
 
 spotifyRedirect = ('http://localhost:8888/callback')
 
-checkForLogin();
+// checkForLogin();
 
 let newArtistsArray = [];
 let newTracksArray = [];

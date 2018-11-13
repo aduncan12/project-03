@@ -134,7 +134,7 @@ app.post('/api/signup', (req, res) => {
                                     })
                                 }
                             )
-                            console.log(token)
+                            console.log('token' + token)
                     })
                 }
             })

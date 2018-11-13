@@ -297,6 +297,8 @@ $('#formLogin').on('submit', function (e) {
 
 $('#spotifyLogin').on('click', function (e) {
     e.preventDefault(); 
+    localStorage.clear();
+    localStorage.setItem('token', json.token)
     setTimeout(function() {
         window.location.pathname = '/login';
     })
@@ -304,8 +306,7 @@ $('#spotifyLogin').on('click', function (e) {
 
 // spotifySuccess = (json) => {
 //     console.log(json)
-//     localStorage.clear();
-//     localStorage.setItem('token', json.token)
+
 //     setTimeout(function () {
 //         window.location.pathname = '/main';});
 // }

@@ -201,7 +201,7 @@ h5 {
 #songsDiv * a, #savedArtists * a {
     padding: 2%;
     background-color: #DDDDDD;
-    display: flex;
+    display: inline-block;
     justify-content: center;
     color: #000000;
     text-decoration: none;
@@ -211,6 +211,10 @@ h5 {
 
 #songsDiv * a:hover, #savedArtists * a:hover {
     font-size: 1.2rem;
+}
+
+#savedArtists * p:hover {
+    cursor: pointer;
 }
 
 #aboutDiv {

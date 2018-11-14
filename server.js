@@ -65,12 +65,14 @@ app.get('/api', (req, res) => {
             {method: "GET", path: "/api/artist/:id", description: "View artist by name"},
             {method: "GET", path: "/api/song/:id", description: "View song by name"}, 
             {method: "GET", path: "/api/comments", description: "View all comments"},
-            {method: "GET", path: "/api/spotify", description: "Get spotify users"},
             {method: "POST", path: "/api/signup", description: "Sign up users"},
             {method: "POST", path: "/api/login", description: "User log in"},
             {method: "POST", path: "/api/addartist", description: "Add Artist Info"},
             {method: "POST", path: "/api/addsong", description: "Add Song Info"},
-            {method: "DELETE", path: "/api/artists", description: "Remove artist from database"}
+            {method: "DELETE", path: "/api/artist/:id", description: "Remove artist from database"},
+            {method: "DELETE", path: "/api/song/:id", description: "Remove song from database"},
+            {method: "DELETE", path: "/api/user/:id", description: "Remove user from database"},
+
         ]
     })
 });
@@ -307,8 +309,36 @@ app.get('/api/song/:id', (req, res) => {
     });
 });
 
+app.delete('/api/artist/:id', (req, res) => {
+    let id = req.params.id;
+    console.log(id)
+    db.Artist.deleteOne( {_id: id} )
+        .then( removedArtist => {
+        res.json(removedArtist);
+    });
+});
 
-// Spotify auth token
+app.delete('/api/song/:id', (req, res) => {
+    let id = req.params.id;
+    console.log(id)
+    db.Song.deleteOne( {_id: id} )
+        .then( removedSong => {
+        res.json(removedSong);
+    });
+});
+
+app.delete('/api/user/:id', (req, res) => {
+    let id = req.params.id;
+    console.log(id)
+    db.User.deleteOne( {_id: id} )
+        .then( removedUser => {
+        res.json(removedUser);
+    });
+});
+
+
+
+// Spotify auth token process from documentation
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -398,7 +428,7 @@ if (state === null || state !== storedState) {
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('/#' +
+        res.redirect('/main#' +
         querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token

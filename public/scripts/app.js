@@ -2,7 +2,8 @@ localStorage.length > 0 ? console.log(localStorage) : console.log('no local stor
 
 spotifyRedirect = ('http://localhost:8888/callback')
 
-// checkForLogin();
+
+checkForLogin();
 
 let newArtistsArray = [];
 let newTracksArray = [];
@@ -69,7 +70,7 @@ function addArtistSuccess (res) {
 function populateArtistList(res) {
     console.log(res)
     let addArtist = 
-    `<li><a href="${res.artistUrl}">${res.name}</a></li>`
+    `<li><a href="${res.artistUrl}">${res.name}' x'</a></li>`
     $('#savedArtists').append(addArtist)
 }
 
@@ -196,7 +197,6 @@ $('#artistSearchIcon').on('click', (e) => {
     let urlHash = window.location.hash;
     tokensArray = urlHash.split('=');
     tokensArray.shift()
-    console.log(tokensArray)
 
     let artist = $('#artistSearch').val();
     $.ajax({
@@ -293,33 +293,29 @@ $('#formLogin').on('submit', function (e) {
         success: loginSuccess,
         error: loginError
     });
-})
-
-$('#spotifyLogin').on('click', function (e) {
-    e.preventDefault(); 
-    localStorage.clear();
     setTimeout(function() {
         window.location.pathname = '/login';
     })
+
 })
 
-// spotifySuccess = (json) => {
-//     console.log(json)
-// localStorage.setItem('token', json.token)
-
-//     setTimeout(function () {
-//         window.location.pathname = '/main';});
-// }
+// $('#logInSubmit').on('click', function (e) {
+//     e.preventDefault(); 
+//     // localStorage.clear();
+//     setTimeout(function() {
+//         window.location.pathname = '/login';
+//     })
+// })
 
 loginSuccess = (json) => {
     console.log(json)
     $('main').first('.error-message').fadeOut();
     $('.alert-success').fadeIn(500);
 
-    localStorage.clear();
+    // localStorage.clear();
     localStorage.setItem('token', json.token)
-    setTimeout(function () {
-        window.location.pathname = '/main';});
+    // setTimeout(function () {
+    //     window.location.pathname = '/main';});
 }  
 
 loginError = (json) => {
@@ -328,6 +324,26 @@ loginError = (json) => {
     $('main').first('.error-message').fadeIn(500);
         $('main').css('display', 'flex');
 }
+
+$('.removeArtist').on('click', (e) => {
+    e.preventDefault();
+
+    $.ajax ({
+        method: "DELETE",
+        url: '/api/artist/:id',
+        success: console.log('deleted'),
+        error: console.log('not deleted')
+    })
+})
+
+// function depopulateArtistList(res) {
+//     console.log(res)
+//     let deleteArtist = 
+//     `<li><a href="${res.artistUrl}">${res.name}</a> <p class='remove'>-</p></li>`
+//     $('#savedArtists').append(deleteArtist)
+// }
+
+
 
 function checkForLogin() {
     if(localStorage.length > 0){
@@ -395,8 +411,9 @@ $('#logOut').on('click', (e) => {
     e.preventDefault();
     localStorage.clear();
     setTimeout(function () {
-        window.location.pathname = '/';}, 500);
+        window.location.pathname = '/';}, 15000);
 })
+
 
 $('#profile').on('click', (e) => {
     e.preventDefault();

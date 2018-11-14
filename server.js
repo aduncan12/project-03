@@ -22,7 +22,7 @@ app.use(cors())
 
 const client_id = '74893e3303c047d68148a47c4ef102bd';
 const client_secret = '1ae987f680774d60873d887e8e878083'; 
-const redirect_uri = '/callback'
+const redirect_uri = 'http://localhost:8888/callback'
 
 
 //html endpoints
@@ -120,23 +120,23 @@ app.post('/api/signup', (req, res) => {
                     });
                     db.User.create(userToCreate, (err, newUser) => {
                         if(err){console.log(err);}
-                            const token = jwt.sign(
-                                {newUser},
-                                //find way to hide key
-                                'key',
-                                {
-                                    expiresIn: '24h'
-                                },
-                                (err, token) => {
-                                    if(err){res.json(err)}
-                                    res.status(200).json({
-                                        message: 'User Created',
-                                        newUser,
-                                        token
-                                    })
-                                }
-                            )
-                            console.log('token' + token)
+                        let token = jwt.sign(
+                            {newUser}, 
+                            //find way to hide key
+                            'key',
+                            {
+                                expiresIn: '24h'
+                            },
+                            (err, token) => {
+                                if(err){res.json(err)}
+                                res.status(200).json({
+                                    message: 'User Created',
+                                    newUser,
+                                    token
+                                })
+                            }
+                        )
+                        console.log('token ' + token)
                     })
                 }
             })
@@ -216,14 +216,6 @@ app.post('/api/addartist', (req, res) => {
                 }
         })
 })
-
-// app.delete('/api/artist', (req, res) => {
-//     let id = req.body._id
-//     let artist = req.body.name
-//     let user = req.body.user
-//     console.log(id)
-//     db.Artist.deleteOne()
-// })
 
 app.post('/api/addsong', (req, res) => {
     let trackAdded = req.body

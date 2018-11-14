@@ -10,6 +10,8 @@ let newTracksArray = [];
 
 function artistGet() {
     let arr = newArtistsArray[0]
+    console.log(arr)
+
     $('.resultsDiv').empty();
     for (i=0; i < arr.length; i++) {
         let newArtists = arr[i].name
@@ -48,8 +50,8 @@ function artistGet() {
                         method: 'POST',
                         url: '/api/addartist',
                         data: artistModel,
-                        success: addArtistSuccess
-                        
+                        success: addArtistSuccess,
+                        error: addArtistError
                     })                    
                 })
             } 
@@ -67,17 +69,21 @@ function addArtistSuccess (res) {
         })
 }
 
+function addArtistError () {
+
+}
+
 function populateArtistList(res) {
     console.log(res)
     let addArtist = 
-    `<li><a href="${res.artistUrl}">${res.name}' x'</a></li>`
+    `<li><a href="${res.artistUrl}">${res.name}</a></li>`
     $('#savedArtists').append(addArtist)
 }
 
 function songGet() {
     let trackArr = newTracksArray[0];
-    $('.resultsDiv').empty();
     console.log(trackArr)
+    $('.resultsDiv').empty();
     for (i=0; i < trackArr.length; i++) {
         let newTracks = trackArr[i].name
         let trackArtist = trackArr[i].artists[0].name
@@ -94,17 +100,22 @@ function songGet() {
                 let songModel = {
                     trackId: trackArr[i].id,
                     artist: trackArr[i].artists[0].name,
+                    artistPage: trackArr[i].artists[0].href,
                     song: trackName,
                     album: trackArr[i].album.name,
+                    albumImg: trackArr[i].album.images[0].url,
                     popularity: trackArr[i].popularity,
-                    trackUrl: trackArr[i].external_urls.spotify,
+                    trackUrl: trackArr[i].href,
                     userId: user._id
                 }
                 let modalPopulate = 
-                    `<a href="${songModel.trackUrl}">${trackName}</a>`
+                    `<img src="${songModel.albumImg}" height="200" width="200">
+                    <p>Artist: ${songModel.artist}</br> Album: ${songModel.album}</p>
+                    <a href="${songModel.artistPage}">Spotify</a>`
+                    
                 $('#artistModalBody').empty()
                 $('#artistModalHeader').empty()
-                $('#artistModalBody').append(`<p>Info: ${songModel.artist}</br> ${songModel.album}</p>`)
+                $('#artistModalBody').append(`<a href="${songModel.trackUrl}">${trackName}</a>`)
                 $('#artistModalHeader').append(modalPopulate)
 
                 $('#songAdd').on('click', (e) => {
@@ -214,6 +225,11 @@ $('#songSearchIcon').on('click', (e) => {
     e.preventDefault();
     $('.resultsDiv').empty();
     $('#artistSearch').val('');
+
+    let urlHash = window.location.hash;
+    tokensArray = urlHash.split('=');
+    tokensArray.shift()
+
     let artist = $('#songSearch').val();
     $.ajax({
         method: 'GET',
@@ -251,8 +267,8 @@ signUpSuccess = (json) => {
     localStorage.clear();
     localStorage.setItem('token', json.token)
     console.log(json.token)
-    setTimeout(function () {
-        window.location.pathname = '/main';}, 500);
+    // setTimeout(function () {
+    //     window.location.pathname = '/main';}, 500);
 }  
 
 signUpError = (json) => {
@@ -296,7 +312,6 @@ $('#formLogin').on('submit', function (e) {
     setTimeout(function() {
         window.location.pathname = '/login';
     })
-
 })
 
 loginSuccess = (json) => {
@@ -328,6 +343,14 @@ $('.removeArtist').on('click', (e) => {
     })
 })
 
+$('#demoLogin').on('click', function (e) {
+    e.preventDefault(); 
+    localStorage.clear();
+    setTimeout(function() {
+        window.location.pathname = '/login';
+    })
+})
+
 // function depopulateArtistList(res) {
 //     console.log(res)
 //     let deleteArtist = 
@@ -346,6 +369,7 @@ function checkForLogin() {
             url: '/verify',  
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + jwt);  
+                console.log(xhr)
             }
         }).done(function (res) {
             console.log(res)
@@ -391,30 +415,37 @@ function checkForLogin() {
         });
     } else {
         console.log('error: no local storage')
+        $('#message').text(`Welcome, Demo User `)
+
     }
 }
 
 $('#about').on('click', (e) => {
     e.preventDefault();
     setTimeout(function () {
-        window.location.pathname = '/about';}, 500);})
+        window.location.pathname = '/about'
+    })
+})
 
 $('#logOut').on('click', (e) => {
     e.preventDefault();
     localStorage.clear();
     setTimeout(function () {
-        window.location.pathname = '/';}, 15000);
+        window.location.pathname = '/'
+    })
 })
 
 
 $('#profile').on('click', (e) => {
     e.preventDefault();
     setTimeout(function () {
-        window.location.pathname = '/profile';}, 500);
+        window.location.pathname = '/profile'
+    })
 })
 
 $('#mainSearch').on('click', (e) => {
     e.preventDefault();
     setTimeout(function () {
-        window.location.pathname = '/main';}, 500);
+        window.location.pathname = '/main'
+    })
 })

@@ -5,8 +5,7 @@ Music Finder
 Pyrrha was born out of a fiery passion to discover new music. Other apps promise to deliver a contant supply of previously unheard of songs, but ultimately just play you the same batch over and over. With Pyrrha, you are in complete control of what new artists and songs you hear.
 You can either search for similar artists, or songs that match a particular artist's sound. Just enter an artist in either search bar to receive a list of suggestions. From there, you can make a selection to receive more information and a link to music, then save what you like to explore further at your leisure. Have fun discovering!
 
-https://dashboard.heroku.com/apps/guarded-retreat-81623/
-
+https://pyrrha.herokuapp.com/
 
 Technologies Used
 

@@ -1,6 +1,6 @@
 localStorage.length > 0 ? console.log(localStorage) : console.log('no local storage');
 
-spotifyRedirect = ('http://localhost:8888/callback')
+// spotifyRedirect = ('http://localhost:8888/callback')
 
 
 checkForLogin();
@@ -298,14 +298,6 @@ $('#formLogin').on('submit', function (e) {
     })
 
 })
-
-// $('#logInSubmit').on('click', function (e) {
-//     e.preventDefault(); 
-//     // localStorage.clear();
-//     setTimeout(function() {
-//         window.location.pathname = '/login';
-//     })
-// })
 
 loginSuccess = (json) => {
     console.log(json)

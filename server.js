@@ -22,7 +22,7 @@ app.use(cors())
 
 const client_id = '74893e3303c047d68148a47c4ef102bd';
 const client_secret = '1ae987f680774d60873d887e8e878083'; 
-const redirect_uri = 'http://localhost:8888/callback'
+const redirect_uri = '/callback'
 
 
 //html endpoints
@@ -460,9 +460,9 @@ var authOptions = {
 request.post(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
     var access_token = body.access_token;
-    res.send({
-        'access_token': access_token
-    });
+        res.send({
+            'access_token': access_token
+        });
     }
 });
 });

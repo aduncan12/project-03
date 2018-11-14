@@ -75,7 +75,7 @@ body {
     width: 50%;
 }
 
-#signUp, #logInButton, #profile, #logOut, #mainSearch, .artistButton, #spotifyLogin {
+#signUp, #logInButton, #profile, #logOut, #mainSearch, .artistButton {
     margin: 0 2%;
     border: none;
     background-color: transparent;
@@ -84,15 +84,14 @@ body {
 
 .artistButton {
     color: #DDDDDD;
-    font-style: italic;
+    font-weight: bold;
 }
-
 
 #artistModalHeader {
     margin: auto;
 }
 
-#signUp:hover, #logInButton:hover, #spotifyLogin:hover, #profile, #logOut, #mainSearch, .artistButton {
+#signUp:hover, #logInButton:hover, #profile, #logOut, #mainSearch, .artistButton, .fas:hover, .artistButton:hover {
     cursor: pointer;
 }
 
@@ -140,26 +139,19 @@ h1 {
 }
 
 h5 {
-    color: #DDDDDD;
-}
-
-#aboutDiv > h5 {
     color: #000000;
 }
 
 #songSearch, #artistSearch {
     /* border: 1px solid; */
     padding: 0 2%;
-    font-size: .9rem
+    font-size: .9rem;
+    width: 77%;
 }
 
 .fas {
     color: #DDDDDD;
     margin: auto 7%;
-}
-
-.fas:hover, .artistButton:hover {
-    cursor: pointer;
 }
 
 .savedDiv {
@@ -188,7 +180,6 @@ h5 {
 
 #artistsDiv, #songsDiv {
     width: 100%;
-
 }
 
 #savedArtists, #savedSongs {

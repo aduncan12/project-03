@@ -10,7 +10,6 @@ let newTracksArray = [];
 
 function artistGet() {
     let arr = newArtistsArray[0]
-    console.log(arr)
 
     $('.resultsDiv').empty();
     for (i=0; i < arr.length; i++) {
@@ -82,7 +81,7 @@ function populateArtistList(res) {
 
 function songGet() {
     let trackArr = newTracksArray[0];
-    console.log(trackArr)
+
     $('.resultsDiv').empty();
     for (i=0; i < trackArr.length; i++) {
         let newTracks = trackArr[i].name
@@ -185,6 +184,7 @@ let songSuccess = (res) => {
     let artistId = res.artists.items[0].id;
     $('.resultsDiv').css('display', 'inline')
     $('#search').css('display', 'block')
+    
 
     // ajax request for recommended tracks
     $.ajax({
@@ -254,9 +254,16 @@ $('#signUpSubmit').on('click', (e) => {
         method: 'POST',
         url:'/api/signup',
         data: newUser,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.token);  
+            console.log(xhr)
+        },
         success: signUpSuccess,
         error: signUpError
     });
+    setTimeout(function() {
+        window.location.pathname = '/login';
+    })
 });
 
 signUpSuccess = (json) => {
@@ -264,11 +271,24 @@ signUpSuccess = (json) => {
     $('.modal-body .error-message').fadeOut(500);
     $('.alert alert-success').fadeIn(500);
 
-    localStorage.clear();
+    // localStorage.clear();
     localStorage.setItem('token', json.token)
     console.log(json.token)
-    // setTimeout(function () {
-    //     window.location.pathname = '/main';}, 500);
+    // setTimeout(
+    //     window.location = '/main', 500);
+    // $.ajax({
+    //     method:"GET",
+    //     headers: {
+    //         'Authorization': 'Bearer' + json.token
+    //     },
+    //     success: function(res){
+    //         console.log(res)
+    //         console.log("yay")
+    //     },
+    //     error: function(res){
+    //         console.log("nay")
+    //     }
+    // })
 }  
 
 signUpError = (json) => {
@@ -358,8 +378,6 @@ $('#demoLogin').on('click', function (e) {
 //     $('#savedArtists').append(deleteArtist)
 // }
 
-
-
 function checkForLogin() {
     if(localStorage.length > 0){
 
@@ -375,11 +393,14 @@ function checkForLogin() {
             console.log(res)
             user = { username: res.username, _id: res._id }
             userId = res._id
-            console.log("you can access variable user: " , user)
+            console.log("you can access variable user: " , user.username, "with id", user._id)
             $('#message').text(`Welcome, ${ res.username || res.newUser.username } `)
             $.ajax({
                 method: 'GET',
                 url: '/api/artists',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + jwt);  
+                },
                 success: loginPopulate = (res) => {
                     let artistsAll = res.artistsAll
                     for(i=0; i < artistsAll.length; i++) {

@@ -22,7 +22,7 @@ app.use(cors())
 
 const client_id = '74893e3303c047d68148a47c4ef102bd';
 const client_secret = '1ae987f680774d60873d887e8e878083'; 
-const redirect_uri = 'https://pyrrha.herokuapp.com/callback'
+const redirect_uri = 'http://localhost:8888/callback'
 
 
 //html endpoints
@@ -31,10 +31,23 @@ app.get('/', (req, res) =>
     res.sendFile(__dirname + '/views/index.html'));
 
     
+// app.get('/main', (req, res, next) => {
+//     console.log('token: ' + req.token)
+//     jwt.verify(req.headers.token, 'key', (err, authData) => {
+//         if(err) {
+//             console.log(req.token)
+//             res.sendStatus(403);
+//         }
+//         else {
+//             res.sendFile(__dirname + '/views/main.html');
+//         }
+//     });
+// });
+
 app.get('/main', (req, res, next) => {
-    console.log('token: ' +req.token)
-    res.sendFile(__dirname + '/views/main.html')
-    });
+    console.log('token: ' + req.token)
+    res.sendFile(__dirname + '/views/main.html');
+});
 
 app.get('/profile', (req, res) => 
     res.sendFile(__dirname + '/views/profile.html'));
@@ -267,7 +280,7 @@ app.get('/api/user/:id', (req, res) => {
     });
 });
 
-app.get('/api/artists', (req, res) => {
+app.get('/api/artists',verifyToken, (req, res) => {
     db.Artist.find( {}, (err, artistsAll) => {
         if(err){console.log(err)};
         res.json({artistsAll});

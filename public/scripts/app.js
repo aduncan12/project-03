@@ -100,14 +100,15 @@ function songGet() {
                 let songModel = {
                     trackId: trackArr[i].id,
                     artist: trackArr[i].artists[0].name,
-                    artistPage: trackArr[i].external_urls.spotify,
+                    artistPage: trackArr[i].artists[0].external_urls.spotify,
                     song: trackName,
                     album: trackArr[i].album.name,
                     albumImg: trackArr[i].album.images[0].url,
                     popularity: trackArr[i].popularity,
-                    trackUrl: trackArr[i].href,
+                    trackUrl: trackArr[i].external_urls.spotify,
                     userId: user._id
                 }
+                console.log(songModel)
                 let modalPopulate = 
                     `<img src="${songModel.albumImg}" height="200" width="200">
                     <p>Artist: ${songModel.artist}</br> Album: ${songModel.album}</br>

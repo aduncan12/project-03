@@ -35,7 +35,7 @@ function artistGet() {
                 }
 
                 let modalPopulate = 
-                    `<img src="${artistModel.image}" height="185" width="250">
+                    `<img src="${artistModel.image}" height="200" width="250">
                     <a href="${artistModel.artistUrl}">${artistModel.name}</a>`
                 $('#artistModalBody').empty()
                 $('#artistModalHeader').empty()
@@ -87,7 +87,7 @@ function songGet() {
         let newTracks = trackArr[i].name
         let trackArtist = trackArr[i].artists[0].name
         let trackList = 
-        `<button class="artistButton" data-toggle="modal" data-target="#artistModal" data-id="${newTracks}">${newTracks}</button>by 
+        `<button class="artistButton" data-toggle="modal" data-target="#songModal" data-id="${newTracks}">${newTracks}</button>by 
         <p> ${trackArtist}</p>`
         $('.resultsDiv').append(trackList);
     }
@@ -109,13 +109,13 @@ function songGet() {
                 }
                 let modalPopulate = 
                     `<img src="${songModel.albumImg}" height="200" width="200">
-                    <p>Artist: ${songModel.artist}</br> Album: ${songModel.album}</p>
-                    <a href="${songModel.artistPage}">Spotify</a>`
+                    <p>Artist: ${songModel.artist}</br> Album: ${songModel.album}</br>
+                    <a href="${songModel.artistPage}">${songModel.artist} on Spotify</a></p>`
                     
-                $('#artistModalBody').empty()
-                $('#artistModalHeader').empty()
-                $('#artistModalBody').append(`<a href="${songModel.trackUrl}">${trackName}</a>`)
-                $('#artistModalHeader').append(modalPopulate)
+                $('#songModalBody').empty()
+                $('#songModalHeader').empty()
+                $('#songModalBody').append(`<a href="${songModel.trackUrl}">${trackName} on Spotify</a>`)
+                $('#songModalHeader').append(modalPopulate)
 
                 $('#songAdd').on('click', (e) => {
                     e.preventDefault();

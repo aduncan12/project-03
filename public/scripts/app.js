@@ -81,6 +81,7 @@ function populateArtistList(res) {
 
 function songGet() {
     let trackArr = newTracksArray[0];
+    console.log(trackArr)
 
     $('.resultsDiv').empty();
     for (i=0; i < trackArr.length; i++) {
@@ -99,7 +100,7 @@ function songGet() {
                 let songModel = {
                     trackId: trackArr[i].id,
                     artist: trackArr[i].artists[0].name,
-                    artistPage: trackArr[i].artists[0].href,
+                    artistPage: trackArr[i].external_urls.spotify,
                     song: trackName,
                     album: trackArr[i].album.name,
                     albumImg: trackArr[i].album.images[0].url,

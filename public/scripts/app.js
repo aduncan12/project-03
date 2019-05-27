@@ -8,76 +8,76 @@ checkForLogin();
 let newArtistsArray = [];
 let newTracksArray = [];
 
-function artistGet() {
-    let arr = newArtistsArray[0]
+// function artistGet() {
+//     let arr = newArtistsArray[0]
 
-    $('.resultsDiv').empty();
-    for (i=0; i < arr.length; i++) {
-        let newArtists = arr[i].name
-        let artistList = 
-        `<button class="artistButton" data-toggle="modal" data-target="#artistModal" data-id="${newArtists}">${newArtists}</button>`
-        $('.resultsDiv').append(artistList);
-    }
-    $('.artistButton').on('click', (e) => {
-        e.preventDefault();
-        let artistName = e.target.getAttribute('data-id');
+//     $('.resultsDiv').empty();
+//     for (i=0; i < arr.length; i++) {
+//         let newArtists = arr[i].name
+//         let artistList = 
+//         `<button class="artistButton" data-toggle="modal" data-target="#artistModal" data-id="${newArtists}">${newArtists}</button>`
+//         $('.resultsDiv').append(artistList);
+//     }
+//     $('.artistButton').on('click', (e) => {
+//         e.preventDefault();
+//         let artistName = e.target.getAttribute('data-id');
 
-        for (i=0; i < arr.length; i++) {
-            if (artistName == arr[i].name) {
-                let artistModel = {
-                    artistId: arr[i].id,
-                    name: artistName,
-                    image: arr[i].images[0].url,
-                    popularity: arr[i].popularity,
-                    genres: arr[i].genres,
-                    artistUrl: arr[i].external_urls.spotify,
-                    userId: user._id
-                }
+//         for (i=0; i < arr.length; i++) {
+//             if (artistName == arr[i].name) {
+//                 let artistModel = {
+//                     artistId: arr[i].id,
+//                     name: artistName,
+//                     image: arr[i].images[0].url,
+//                     popularity: arr[i].popularity,
+//                     genres: arr[i].genres,
+//                     artistUrl: arr[i].external_urls.spotify,
+//                     userId: user._id
+//                 }
 
-                let modalPopulate = 
-                    `<img src="${artistModel.image}" height="200" width="250">
-                    <a href="${artistModel.artistUrl}">${artistModel.name}</a>`
-                $('#artistModalBody').empty()
-                $('#artistModalHeader').empty()
-                $('#artistModalBody').append(`<p>Genre(s): ${artistModel.genres}</p>`)
-                $('#artistModalHeader').append(modalPopulate)
+//                 let modalPopulate = 
+//                     `<img src="${artistModel.image}" height="200" width="250">
+//                     <a href="${artistModel.artistUrl}">${artistModel.name}</a>`
+//                 $('#artistModalBody').empty()
+//                 $('#artistModalHeader').empty()
+//                 $('#artistModalBody').append(`<p>Genre(s): ${artistModel.genres}</p>`)
+//                 $('#artistModalHeader').append(modalPopulate)
                 
-                $('#artistAdd').on('click', (e) => {
-                    e.preventDefault();
+//                 $('#artistAdd').on('click', (e) => {
+//                     e.preventDefault();
                     
-                    $.ajax({
-                        method: 'POST',
-                        url: '/api/addartist',
-                        data: artistModel,
-                        success: addArtistSuccess,
-                        error: addArtistError
-                    })                    
-                })
-            } 
-        }
-    })
-}
+//                     $.ajax({
+//                         method: 'POST',
+//                         url: '/api/addartist',
+//                         data: artistModel,
+//                         success: addArtistSuccess,
+//                         error: addArtistError
+//                     })                    
+//                 })
+//             } 
+//         }
+//     })
+// }
 
-function addArtistSuccess (res) {
-    console.log(res)
-        $.ajax({
-            method: 'GET',
-            url: '/api/artist/'+res.data._id,
-            success: populateArtistList,
-            error: ('oops')
-        })
-}
+// function addArtistSuccess (res) {
+//     console.log(res)
+//         $.ajax({
+//             method: 'GET',
+//             url: '/api/artist/'+res.data._id,
+//             success: populateArtistList,
+//             error: ('oops')
+//         })
+// }
 
-function addArtistError () {
+// function addArtistError () {
 
-}
+// }
 
-function populateArtistList(res) {
-    console.log(res)
-    let addArtist = 
-    `<li><a href="${res.artistUrl}">${res.name}</a></li>`
-    $('#savedArtists').append(addArtist)
-}
+// function populateArtistList(res) {
+//     console.log(res)
+//     let addArtist = 
+//     `<li><a href="${res.artistUrl}">${res.name}</a></li>`
+//     $('#savedArtists').append(addArtist)
+// }
 
 function songGet() {
     let trackArr = newTracksArray[0];

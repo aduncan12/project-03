@@ -154,7 +154,7 @@ h1 {
     margin: 10% 0;
 }
 
-#welcome > h1, #aboutDiv > h1 {
+#welcome > h1, #aboutDiv > h1, #mainNav > h1 {
     color: #000000;
     margin: 5% 0;
 }

@@ -207,7 +207,8 @@ h5 {
     list-style-type: none;
     margin: auto;
     padding-left: 0;
-    font-size: .8rem;
+    /* font-size: .8rem; */
+    font-style: italic;
 }
 
 #songsDiv * a, #savedArtists * a {
@@ -219,6 +220,7 @@ h5 {
     text-decoration: none;
     font-size: 1rem;
     font-weight: bold;
+    font-style: normal;
 }
 
 #songsDiv * a:hover, #savedArtists * a:hover {

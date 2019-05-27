@@ -184,7 +184,7 @@ let artistSuccess = (res) => {
 
 let songSuccess = (res) => {
     let artistId = res.artists.items[0].id;
-    // $('.resultsDiv').css('display', 'inline')
+    $('.resultsDiv').css('display', 'inline')
     $('#search').css('display', 'block')
     
 

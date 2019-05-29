@@ -197,15 +197,15 @@ h5 {
     /* flex-direction: column; */
     justify-content: center;
     border-radius: 5px;
-    width: 31vw;
-    height: 75%;
-    margin: auto 5%;
+    width: 40vw;
+    height: 55vh;
+    margin: 2% auto;
     overflow-y: auto;
 }
 
 .resultsDiv {
     color: #DDDDDD;
-    width: 31vw;
+    width: 40vw;
     margin: 2% auto;
     overflow-y: auto;
     background: transparent;

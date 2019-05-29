@@ -76,7 +76,7 @@ body {
 }
 
 #demoLogin, #signUp, #logInButton, #profile, #logOut, #mainSearch, .artistButton {
-    margin: 0 2%;
+    /* margin: 0 2%; */
     border: none;
     background-color: transparent;
     /* padding: 1%; */

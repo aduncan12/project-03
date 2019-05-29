@@ -88,8 +88,7 @@ function songGet() {
         let newTracks = trackArr[i].name
         let trackArtist = trackArr[i].artists[0].name
         let trackList = 
-        `<button class="artistButton" data-toggle="modal" data-target="#songModal" data-id="${newTracks}">${newTracks}</button>by 
-        <p> ${trackArtist}</p>`
+        `<li><button class="artistButton" data-toggle="modal" data-target="#songModal" data-id="${newTracks}">${newTracks}</button>by ${trackArtist}</li>`
         $('.resultsDiv').append(trackList);
     }
     $('.artistButton').on('click', (e) => {

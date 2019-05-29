@@ -212,6 +212,7 @@ h5 {
     display: none;
     flex-flow: column wrap;
     justify-content: center;
+    list-style-type: none;
 }
 
 #artistsDiv, #songsDiv {

@@ -132,7 +132,7 @@ main {
     display: flex;
     /* flex-direction: row; */
     text-align: center;
-    width: 100vw;
+    width: 85vw;
 }
 
 .search {
@@ -143,10 +143,19 @@ main {
 }
 
 #searchDiv {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    /* width: 50vw; */
-    align-items: center;
+    width: 50vw;
+    align-items: center; */
+    margin: 0 auto;
+}
+
+#mainDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 60vh;
+    width: 85vw;
 }
 
 h1 {
@@ -188,7 +197,7 @@ h5 {
     /* flex-direction: column; */
     justify-content: center;
     border-radius: 5px;
-    width: 30vw;
+    width: 31vw;
     height: 75%;
     margin: auto 5%;
     overflow-y: auto;
@@ -260,6 +269,7 @@ footer {
     box-shadow: 1px 1px rgba(0,0,0,.5);
     border-radius: 5px;
     width: 75vw;
+    height: 7vh;
     margin: auto;
 }
 

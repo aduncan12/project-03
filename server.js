@@ -22,7 +22,9 @@ app.use(cors())
 
 const client_id = '74893e3303c047d68148a47c4ef102bd';
 const client_secret = '1ae987f680774d60873d887e8e878083'; 
-const redirect_uri = 'https://pyrrha.herokuapp.com/callback'
+// const redirect_uri = 'https://pyrrha.herokuapp.com/callback'
+const redirect_uri = 'http://localhost:8888/callback'
+
 
 
 //html endpoints

@@ -136,6 +136,11 @@ main {
     width: 85vw;
 }
 
+#profileMain {
+    /* text-align: center; */
+    width: 85wv;
+}
+
 .search {
     /* display: inline-flex; */
     /* justify-content: space-between; */
@@ -192,7 +197,7 @@ h5 {
     margin: auto 7%;
 }
 
-.savedDiv {
+.savedDiv, #playlists {
     padding: 1%;
     background-color: #DDDDDD;
     opacity: .4;

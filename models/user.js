@@ -1,8 +1,6 @@
 const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-
-
 const userSchema = new Schema({
     username: {
         type: String,
@@ -23,13 +21,13 @@ const userSchema = new Schema({
 
     // image: String,
     
-    artists: {
-        type: Schema.Types.ObjectId,
-        ref: 'Artist'
-    },
     songs: {
         type: Schema.Types.ObjectId,
         ref: 'Songs'
+    },
+    playlists: {
+        type: Schema.Types.ObjectId,
+        ref: 'Playlists'
     }
 });
 

@@ -5,10 +5,6 @@ const mongoose = require('mongoose'),
 const songSchema = new Schema({
     trackId: String,
     artist: String,
-    // artist: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'Artist'
-    // },
     song: String,
     album: String,
     popularity: Number,
@@ -17,6 +13,10 @@ const songSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    playlists: {
+        type: Schema.Types.ObjectId,
+        ref: 'Playlists'
+    }
 })
 
 const Song = mongoose.model('Song', songSchema);

@@ -32,7 +32,6 @@ const redirect_uri = 'http://localhost:8888/callback'
 app.get('/', (req, res) => 
     res.sendFile(__dirname + '/views/index.html'));
 
-    
 // app.get('/main', (req, res, next) => {
 //     console.log('token: ' + req.token)
 //     jwt.verify(req.headers.token, 'key', (err, authData) => {
@@ -74,19 +73,19 @@ app.get('/api', (req, res) => {
         endpoints: [
             {method: "GET", path: "/api", description: "Describes all available endpoints"},
             {method: "GET", path: "/api/users", description: "View all users"}, 
-            {method: "GET", path: "/api/songs", description: "View all songs"}, 
-            {method: "GET", path: "/api/artists", description: "View all artists"}, 
             {method: "GET", path: "/api/user/:id", description: "View user by id"}, 
-            {method: "GET", path: "/api/artist/:id", description: "View artist by name"},
+            {method: "GET", path: "/api/songs", description: "View all songs"}, 
             {method: "GET", path: "/api/song/:id", description: "View song by name"}, 
+            {method: "GET", path: "/api/playlists", description: "View all playlists"}, 
+            {method: "GET", path: "/api/playlist/:id", description: "View playlist by id"},
             {method: "GET", path: "/api/comments", description: "View all comments"},
             {method: "POST", path: "/api/signup", description: "Sign up users"},
             {method: "POST", path: "/api/login", description: "User log in"},
-            {method: "POST", path: "/api/addartist", description: "Add Artist Info"},
             {method: "POST", path: "/api/addsong", description: "Add Song Info"},
-            {method: "DELETE", path: "/api/artist/:id", description: "Remove artist from database"},
-            {method: "DELETE", path: "/api/song/:id", description: "Remove song from database"},
+            {method: "POST", path: "/api/addplaylist", description: "Add Playlist Info"},
             {method: "DELETE", path: "/api/user/:id", description: "Remove user from database"},
+            {method: "DELETE", path: "/api/song/:id", description: "Remove song from database"},
+            {method: "DELETE", path: "/api/playlist/:id", description: "Remove playlist from database"},
 
         ]
     })
@@ -200,37 +199,37 @@ app.post('/api/login', (req, res) => {
         })
 })
 
-app.post('/api/addartist', (req, res) => {
-    let artistAdded = req.body
-// find way to save genres array
-    db.Artist.find({artistId: artistAdded.artistId})
-        .exec()
-        .then( artists => {
-            if(artists.length >= 1) {
-                return res.status(409).json({
-                    message: "artist already exists"
-                })
-            } else {
-                db.Artist.create({
-                    artistId: artistAdded.artistId,
-                    name: artistAdded.name,
-                    image: artistAdded.image,
-                    popularity: artistAdded.popularity,
-                    genres: artistAdded.genres,
-                    artistUrl: artistAdded.artistUrl,
-                    user: artistAdded.userId,        
-                    }, 
-                    (err, savedArtist) => {
-                        if(err) {
-                            console.log(err);
-                        } else {
-                            console.log(savedArtist);
-                            return res.json({data: savedArtist})
-                        }
-                    })
-                }
-        })
-})
+// app.post('/api/addartist', (req, res) => {
+//     let artistAdded = req.body
+// // find way to save genres array
+//     db.Artist.find({artistId: artistAdded.artistId})
+//         .exec()
+//         .then( artists => {
+//             if(artists.length >= 1) {
+//                 return res.status(409).json({
+//                     message: "artist already exists"
+//                 })
+//             } else {
+//                 db.Artist.create({
+//                     artistId: artistAdded.artistId,
+//                     name: artistAdded.name,
+//                     image: artistAdded.image,
+//                     popularity: artistAdded.popularity,
+//                     genres: artistAdded.genres,
+//                     artistUrl: artistAdded.artistUrl,
+//                     user: artistAdded.userId,        
+//                     }, 
+//                     (err, savedArtist) => {
+//                         if(err) {
+//                             console.log(err);
+//                         } else {
+//                             console.log(savedArtist);
+//                             return res.json({data: savedArtist})
+//                         }
+//                     })
+//                 }
+//         })
+// })
 
 app.post('/api/addsong', (req, res) => {
     let trackAdded = req.body
@@ -273,29 +272,12 @@ app.get('/api/users', (req, res) => {
 });
 
 app.get('/api/user/:id', (req, res) => {
-    let userId = req.params._id;
+    let userId = req.params.id;
     db.User.findById( userId )
         // .populate('username')
         .exec( (err, foundUser) => {
         if(err){ return res.status(400).json({err: "error has occured"})} 
         res.json(foundUser);
-    });
-});
-
-app.get('/api/artists',verifyToken, (req, res) => {
-    db.Artist.find( {}, (err, artistsAll) => {
-        if(err){console.log(err)};
-        res.json({artistsAll});
-    });
-});
-
-app.get('/api/artist/:id', (req, res) => {
-    let id = req.params.id;
-    console.log(id)
-    db.Artist.findById( {_id: id} )
-        // .populate('username')
-        .then( foundArtist => {
-        res.json(foundArtist);
     });
 });
 
@@ -308,22 +290,53 @@ app.get('/api/songs', (req, res) => {
 
 app.get('/api/song/:id', (req, res) => {
     let id = req.params.id;
-    console.log(id)
     db.Song.findById( {_id: id} )
-        // .populate('username')
         .then( foundSong => {
         res.json(foundSong);
     });
 });
 
-app.delete('/api/artist/:id', (req, res) => {
-    let id = req.params.id;
-    console.log(id)
-    db.Artist.deleteOne( {_id: id} )
-        .then( removedArtist => {
-        res.json(removedArtist);
+app.get('/api/playlists', (req, res) => {
+    db.Playlist.find( {}, (err, playlistsAll) => {
+        if(err){console.log(err)};
+        res.json({playlistsAll});
     });
 });
+
+app.get('/api/playlist/:id', (req, res) => {
+    let id = req.params.id;
+    db.Playlist.findById( {_id: id} )
+        .then( foundPlaylist => {
+        res.json(foundPlaylist);
+    });
+});
+
+// app.get('/api/artists',verifyToken, (req, res) => {
+//     db.Artist.find( {}, (err, artistsAll) => {
+//         if(err){console.log(err)};
+//         res.json({artistsAll});
+//     });
+// });
+
+// app.get('/api/artist/:id', (req, res) => {
+//     let id = req.params.id;
+//     console.log(id)
+//     db.Artist.findById( {_id: id} )
+//         // .populate('username')
+//         .then( foundArtist => {
+//         res.json(foundArtist);
+//     });
+// });
+
+
+// app.delete('/api/artist/:id', (req, res) => {
+//     let id = req.params.id;
+//     console.log(id)
+//     db.Artist.deleteOne( {_id: id} )
+//         .then( removedArtist => {
+//         res.json(removedArtist);
+//     });
+// });
 
 app.delete('/api/song/:id', (req, res) => {
     let id = req.params.id;
@@ -333,6 +346,13 @@ app.delete('/api/song/:id', (req, res) => {
         res.json(removedSong);
     });
 });
+
+app.delete('/api/songs', (req, res) => {
+    db.Song.deleteMany( {}, (err, songsAll) => {
+        if(err){console.log(err)};
+        res.json({songsAll});
+    });
+})
 
 app.delete('/api/user/:id', (req, res) => {
     let id = req.params.id;

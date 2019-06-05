@@ -5,10 +5,12 @@ const User = require('./user');
 const Artist = require('./artist');
 const Song = require('./song');
 const Comments = require('./comments');
+const Playlist = require('./playlist')
 
 module.exports = {
     User: User,
     Artist: Artist,
     Song: Song,
-    Comments: Comments
+    Comments: Comments,
+    Playlist: Playlist
 }

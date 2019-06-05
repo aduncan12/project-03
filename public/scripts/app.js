@@ -116,17 +116,66 @@ function addSongSuccess (res) {
 
 function populateSongList(res) {
     console.log(res)
+
+    let songId = res._id
+    let songName = res.song
+    let spotifyId = res.trackId
+    let songUser = res.user
+
     let addSong = 
-    `<li><a href="${res.trackUrl}">${res.song}</a> - ${res.artist}</li>`
+    `<li class="savedSong"><button type="button" class="xClose">x</button><a href="${res.trackUrl}">${res.song}</a> - ${res.artist}</li>`
     $('#savedSongs').append(addSong)
+
+    $('.xClose').on('click', (e) => {
+        console.log(songName)
+    })
 }
 
-$('#saveList').on('click', (e) => {
+let savePlaylist = []
+
+$('#savePlaylist').on('click', (e) => {
     e.preventDefault();
-    console.log('hello')
-    newList += $('#savedSongs')
-    $('#playlists').append(newList)
+
+    let newPlaylistName = $('#playlistName').val();
+    let newPlaylist = $('#savedSongs').children();
+    console.log(newPlaylist)
+
+    for (i=0; i < newPlaylist.length; i++) {
+        let playlistModel = {
+            title: newPlaylistName,
+            song: newPlaylist[i].innerText,
+            user: user._id
+        }
+        // savePlaylist += playlistModel
+        savePlaylist.push(playlistModel)
+    }
+    console.log(savePlaylist)
+
+    $.ajax({
+        method: 'POST',
+        url: '/api/addplaylist',
+        data: JSON.stringify(savePlaylist),
+        success: console.log(savePlaylist),
+        })
 })
+
+function addPlaylistSuccess(res) {
+    console.log(res)
+    $.ajax({
+        method: 'GET',
+        url: '/api/playlist/'+res.data._id,
+        success: populatePlaylistList,
+        error: console.log('oops')
+    })
+}
+
+function populatePlaylistList(res) {
+    console.log(res)
+    let addPlaylist = 
+    `<li>${res.title}</li>`
+    $('#playlists').append(addPlaylist)
+}
+
 
 $('#signUpSubmit').on('click', (e) => {
     e.preventDefault();
@@ -236,7 +285,7 @@ loginError = (json) => {
     console.log(json)
     $('main').first('.error-message').fadeOut(200);
     $('main').first('.error-message').fadeIn(500);
-        $('main').css('display', 'flex');
+    $('main').css('display', 'flex');
 }
 
 $('.removeArtist').on('click', (e) => {
@@ -250,13 +299,13 @@ $('.removeArtist').on('click', (e) => {
     })
 })
 
-$('#demoLogin').on('click', function (e) {
-    e.preventDefault(); 
-    localStorage.clear();
-    setTimeout(function() {
-        window.location.pathname = '/login';
-    })
-})
+// $('#demoLogin').on('click', function (e) {
+//     e.preventDefault(); 
+//     localStorage.clear();
+//     setTimeout(function() {
+//         window.location.pathname = '/login';
+//     })
+// })
 
 // function depopulateArtistList(res) {
 //     console.log(res)

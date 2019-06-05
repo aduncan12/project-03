@@ -22,8 +22,8 @@ app.use(cors())
 
 const client_id = '74893e3303c047d68148a47c4ef102bd';
 const client_secret = '1ae987f680774d60873d887e8e878083'; 
-const redirect_uri = 'https://pyrrha.herokuapp.com/callback'
-// const redirect_uri = 'http://localhost:8888/callback'
+// const redirect_uri = 'https://pyrrha.herokuapp.com/callback'
+const redirect_uri = 'http://localhost:8888/callback'
 
 
 
@@ -259,9 +259,48 @@ app.post('/api/addsong', (req, res) => {
                         console.log(savedTrack);
                         return res.json({data: savedTrack})
                     }
-                })
-            }            
+                }
+            )
+        }   
     })
+})
+
+app.post('/api/addplaylist', (req, res) => {
+    console.log(req.body)
+    let playlistAdded = req.body
+    console.log('Your playlist info is: ', playlistAdded)
+
+    db.Playlist.create ({
+        title: playlistAdded.title,
+        song: playlistAdded.song,
+        user: playlistAdded.userId
+    })
+
+    // db.Playlist.find({req: body.title})
+    // console.log(title)
+    // .exec()
+    // .then(titles => {
+    //     if(titles.length >= 1) {
+    //         return res.status(409).json ({
+    //             message: "playlist already exists"
+    //         })
+    //     } else {
+    //         db.Playlist.create({
+    //             title: playlistAdded.title,
+    //             song: playlistAdded.song,
+    //             user: playlistAdded.userId,  
+    //             },
+    //             (err, savedPlaylist) => {
+    //                 if(err) {
+    //                     console.log(err);
+    //                 } else {
+    //                     console.log(savedPlaylist);
+    //                     return res.json({data: savedPlaylist})
+    //                 }
+    //             }
+    //         )
+    //     }
+    // })
 })
 
 app.get('/api/users', (req, res) => {
@@ -354,6 +393,13 @@ app.delete('/api/songs', (req, res) => {
     });
 })
 
+app.delete('/api/playlists', (req, res) => {
+    db.Playlist.deleteMany( {}, (err, playlistsAll) => {
+        if(err){console.log(err)};
+        res.json({playlistsAll});
+    });
+})
+
 app.delete('/api/user/:id', (req, res) => {
     let id = req.params.id;
     console.log(id)
@@ -363,6 +409,14 @@ app.delete('/api/user/:id', (req, res) => {
     });
 });
 
+app.delete('/api/playlist/:id', (req, res) => {
+    let id = req.params.id;
+    console.log(id)
+    db.Playlist.deleteOne( {_id: id} )
+        .then( removedPlaylist => {
+        res.json(removedPlaylist);
+    });
+});
 
 
 // Spotify auth token process from documentation

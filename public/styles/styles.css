@@ -255,6 +255,31 @@ h5 {
     cursor: pointer;
 }
 
+#playlistModal {
+    height: 17vh;
+}
+
+#playlistHeader {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 10px;
+}
+
+#playlistHeader > h5 {
+    margin: 0;
+    align-self: center;
+}
+
+#playlistButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+#playlistButtons > button {
+    margin: 0 5px;
+}
+
 #aboutDiv {
     margin: auto;
     display: flex;
